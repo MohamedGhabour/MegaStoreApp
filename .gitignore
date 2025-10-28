@@ -1,0 +1,20 @@
+# Node
+node_modules/
+npm-debug.log
+package-lock.json
+
+# Env
+*.env
+
+# Flutter
+build/
+**/build/
+**/.dart_tool/
+**/.pub-cache/
+**/.idea/
+**/.vscode/
+**/android/.gradle
+
+# OS
+.DS_Store
+Thumbs.db
