@@ -8,7 +8,7 @@ const bgColor = Color(0xFF212332);
 const defaultPadding = 16.0;
 
 // TODO: change according to yours
-const MAIN_URL = 'http://127.0.0.1:5000';
+const MAIN_URL = "https://megastoreapp-production.up.railway.app";
 const currency_symbol = "EGP ";
 
 // product summary info

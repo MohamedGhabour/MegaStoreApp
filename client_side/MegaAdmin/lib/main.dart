@@ -76,7 +76,7 @@ class MyApp extends StatelessWidget {
             .apply(bodyColor: Colors.white),
         canvasColor: secondaryColor,
       ),
-      initialRoute: AppPages.login, // ✅ يبدأ التطبيق بصفحة Login
+      initialRoute: AppPages.login,
       unknownRoute: GetPage(name: '/notFound', page: () => const MainScreen()),
       defaultTransition: Transition.cupertino,
       getPages: AppPages.routes,
