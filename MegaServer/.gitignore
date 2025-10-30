@@ -113,7 +113,5 @@ dist
 
 .pnp.*
 
-
-# Firebase service account JSON
-MegaServer/megastoreadmin-firebase-adminsdk-fbsvc-a89582e5bf.json
+megastoreadmin-firebase-adminsdk-fbsvc-45ce936003.json
 

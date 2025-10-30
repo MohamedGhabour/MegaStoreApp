@@ -5,36 +5,53 @@ const mongoose = require("mongoose");
 const asyncHandler = require("express-async-handler");
 const dotenv = require("dotenv");
 const admin = require("firebase-admin");
-const path = require("path");
 
 dotenv.config();
 
 const app = express();
 
 // Firebase Admin SDK
-const serviceAccount = require(path.join(__dirname, "megastoreadmin-firebase-adminsdk-fbsvc-a89582e5bf.json"));
-
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-});
+try {
+  const serviceAccount = JSON.parse(process.env.FIREBASE_ADMIN_KEY);
+  admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount),
+  });
+  console.log("✅ Firebase Admin initialized");
+} catch (err) {
+  console.error("❌ Firebase Admin init error:", err);
+}
 
 // Middleware
 app.use(cors({ origin: "*" }));
 app.use(bodyParser.json());
 
-// Setting static folder paths
+// Static folders
 app.use("/image/products", express.static("public/products"));
 app.use("/image/category", express.static("public/category"));
 app.use("/image/poster", express.static("public/posters"));
 
-// Connect to MongoDB
+// Connect to MongoDB safely
 const URL = process.env.MONGO_URL;
-mongoose.connect(URL);
-const db = mongoose.connection;
-db.on("error", (error) => console.error(error));
-db.once("open", () => console.log("Connected to Database"));
+mongoose.connect(URL)
+  .then(() => console.log("✅ Connected to Database"))
+  .catch(err => {
+    console.error("❌ DB connection error:", err);
+    process.exit(1); // Stop app if DB fails
+  });
 
-// Routes
+// Test route to check if server responds
+app.get("/ping", (req, res) => res.send("pong"));
+
+// Example API route
+app.get("/", asyncHandler(async (req, res) => {
+  res.json({
+    success: true,
+    message: "API working successfully",
+    data: null,
+  });
+}));
+
+// Import other routes
 app.use("/categories", require("./routes/category"));
 app.use("/subCategories", require("./routes/subCategory"));
 app.use("/brands", require("./routes/brand"));
@@ -49,25 +66,14 @@ app.use("/payment", require("./routes/payment"));
 app.use("/notification", require("./routes/notification")); // لاحقًا سيتم استخدام admin.messaging() هنا
 app.use("/admin", require("./routes/admin"));
 
-// Example route using asyncHandler directly
-app.get(
-  "/",
-  asyncHandler(async (req, res) => {
-    res.json({
-      success: true,
-      message: "API working successfully",
-      data: null,
-    });
-  })
-);
-
 // Global error handler
 app.use((error, req, res, next) => {
+  console.error("❌ Global error:", error);
   res.status(500).json({ success: false, message: error.message, data: null });
 });
 
+// Start server using PORT from Railway
 const PORT = process.env.PORT || 5000;
-
 app.listen(PORT, "0.0.0.0", () => {
   console.log(`✅ Server running on port ${PORT}`);
 });
