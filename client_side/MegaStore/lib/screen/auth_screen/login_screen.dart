@@ -17,33 +17,20 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-
   // 🟢 Sign user in
   Future<void> signUserIn() async {
-    // إظهار شاشة التحميل
     showLoadingDialog(context);
-
-    // تنفيذ عملية تسجيل الدخول
     final result = await context.userProvider.login();
-
-    // التحقق من أن الـ widget ما زالت موجودة قبل استخدام context
     if (!mounted) return;
-
-    Navigator.pop(context); // إغلاق شاشة التحميل
-
+    Navigator.pop(context);
     if (result == null) {
-      // تسجيل الدخول ناجح
       context.userProvider.emailController.clear();
       context.userProvider.passwordController.clear();
       context.userProvider.passwordController2.clear();
-
       Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-          builder: (context) => const HomeScreen(),
-        ),
+        MaterialPageRoute(builder: (context) => const HomeScreen()),
       );
     } else {
-      // حدث خطأ
       SnackBarHelper.showErrorSnackBar(result);
     }
   }
@@ -57,147 +44,150 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[300],
+      backgroundColor: const Color.fromRGBO(248, 249, 250, 1),
       body: SafeArea(
         child: SingleChildScrollView(
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const SizedBox(height: 50),
-
-                // logo
-                const Icon(
-                  Icons.lock,
-                  size: 100,
-                  color: Colors.black87,
-                ),
-
-                const SizedBox(height: 50),
-
-                // welcome back, you've been missed!
-                Text(
-                  'Welcome back, you\'ve been missed!',
-                  style: TextStyle(
-                    color: Colors.grey[700],
-                    fontSize: 16,
+          child: Stack(
+            children: [
+              // 👆 أي عناصر من Figma ممكن تتحط هنا مثل status bar أو decorations
+              Column(
+                children: [
+                  const SizedBox(height: 45),
+                  // العنوان الرئيسي
+                  Image.asset(
+                    'assets/images/LOGO2.png',
+                    width: 250, // ممكن تعدل الحجم حسب الحاجة
+                    height: 150,
                   ),
-                ),
 
-                const SizedBox(height: 25),
+                  const SizedBox(height: 20),
+                  const Text(
+                    'Welcome Back You’ve Been Missed!',
+                    style: TextStyle(
+                      color: Color.fromRGBO(112, 123, 129, 1),
+                      fontSize: 16,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 10),
 
-                // email textfield
-                LoginTextField(
-                  controller: context.userProvider.emailController,
-                  hintText: 'Email',
-                  obscureText: false,
-                ),
+                  // 🟢 Inputs
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                    child: Column(
+                      children: [
+                        LoginTextField(
+                          controller: context.userProvider.emailController,
+                          hintText: 'Email',
+                          obscureText: false,
+                        ),
+                        const SizedBox(height: 10),
+                        LoginTextField(
+                          controller: context.userProvider.passwordController,
+                          hintText: 'Password',
+                          obscureText: true,
+                        ),
+                        const SizedBox(height: 10),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Text(
+                              'Forgot Password?',
+                              style: TextStyle(color: Colors.grey[600]),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 25),
+                        LoginButton(onTap: signUserIn, buttonText: 'Sign In'),
+                      ],
+                    ),
+                  ),
 
-                const SizedBox(height: 10),
+                  const SizedBox(height: 40),
 
-                // password textfield
-                LoginTextField(
-                  controller: context.userProvider.passwordController,
-                  hintText: 'Password',
-                  obscureText: true,
-                ),
+                  // or continue with
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Divider(
+                            thickness: 0.5,
+                            color: Colors.grey[400],
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                          child: Text(
+                            'Or continue with',
+                            style: TextStyle(color: Colors.grey[700]),
+                          ),
+                        ),
+                        Expanded(
+                          child: Divider(
+                            thickness: 0.5,
+                            color: Colors.grey[400],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
 
-                const SizedBox(height: 10),
+                  const SizedBox(height: 35),
 
-                // forgot password?
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
+                  // google + apple sign in buttons
+                  const Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SquareTile(imagePath: 'assets/images/google.png'),
+                      SizedBox(width: 25),
+                      SquareTile(imagePath: 'assets/images/apple.png'),
+                    ],
+                  ),
+
+                  const SizedBox(height: 35),
+
+                  // not a member? register now
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        'Forgot Password?',
-                        style: TextStyle(color: Colors.grey[600]),
+                        'Not a member?',
+                        style: TextStyle(color: Colors.grey[700], fontSize: 14),
                       ),
-                    ],
-                  ),
-                ),
-
-                const SizedBox(height: 25),
-
-                // sign in button
-                LoginButton(
-                  onTap: signUserIn,
-                  buttonText: 'Sign In',
-                ),
-
-                const SizedBox(height: 50),
-
-                // or continue with
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: Divider(
-                          thickness: 0.5,
-                          color: Colors.grey[400],
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                        child: Text(
-                          'Or continue with',
-                          style: TextStyle(color: Colors.grey[700]),
-                        ),
-                      ),
-                      Expanded(
-                        child: Divider(
-                          thickness: 0.5,
-                          color: Colors.grey[400],
+                      const SizedBox(width: 6),
+                      InkWell(
+                        onTap: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => const RegisterScreen(),
+                            ),
+                          );
+                        },
+                        borderRadius: BorderRadius.circular(4),
+                        splashColor: Colors.blue.withOpacity(0.2),
+                        child: const Padding(
+                          padding: EdgeInsets.symmetric(
+                            vertical: 4,
+                            horizontal: 2,
+                          ),
+                          child: Text(
+                            'Register now',
+                            style: TextStyle(
+                              color: Color(0xFF1976D2),
+                              fontWeight: FontWeight.bold,
+                              fontSize: 14,
+                            ),
+                          ),
                         ),
                       ),
                     ],
                   ),
-                ),
 
-                const SizedBox(height: 50),
-
-                // google + apple sign in buttons
-                const Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SquareTile(imagePath: 'assets/images/google.png'),
-                    SizedBox(width: 25),
-                    SquareTile(imagePath: 'assets/images/apple.png')
-                  ],
-                ),
-
-                const SizedBox(height: 50),
-
-                // not a member? register now
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Not a member?',
-                      style: TextStyle(color: Colors.grey[700]),
-                    ),
-                    const SizedBox(width: 4),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                              builder: (context) => const RegisterScreen()),
-                        );
-                      },
-                      child: const Text(
-                        'Register now',
-                        style: TextStyle(
-                          color: Colors.blue,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
+                  const SizedBox(height: 50),
+                ],
+              ),
+            ],
           ),
         ),
       ),

@@ -1,4 +1,5 @@
-// ignore_for_file: unused_field, unused_local_variable
+
+// ignore_for_file: unused_field
 
 import 'dart:developer';
 import 'package:email_validator/email_validator.dart';

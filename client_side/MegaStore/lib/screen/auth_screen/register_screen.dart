@@ -20,10 +20,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Future<void> signUserUp() async {
     showLoadingDialog(context);
 
-    // تسجيل المستخدم
     final result = await context.userProvider.register();
 
-    // التحقق من أن الـ widget ما زالت موجودة قبل استخدام context
     if (!mounted) return;
 
     Navigator.pop(context); // إغلاق شاشة التحميل
@@ -48,92 +46,121 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[300],
+      backgroundColor: const Color(0xFFF8F9FA), // لون قريب من Figma
       body: SafeArea(
         child: SingleChildScrollView(
           child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                // logo
-                const Icon(
-                  Icons.ac_unit_rounded,
-                  size: 100,
-                  color: Colors.black87,
-                ),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const SizedBox(height: 80),
 
-                const SizedBox(height: 25),
-
-                // welcome message
-                Text(
-                  'Let\'s join nexara family!',
-                  style: TextStyle(
-                    color: Colors.grey[700],
-                    fontSize: 16,
+                  // logo
+                  Image.asset(
+                    'assets/images/LOGO2.png',
+                    width: 250, // ممكن تعدل الحجم حسب الحاجة
+                    height: 150,
                   ),
-                ),
 
-                const SizedBox(height: 50),
+                  const SizedBox(height: 20),
 
-                // email textfield
-                LoginTextField(
-                  controller: context.userProvider.emailController,
-                  hintText: 'Email',
-                  obscureText: false,
-                ),
-
-                const SizedBox(height: 10),
-
-                // password textfield
-                LoginTextField(
-                  controller: context.userProvider.passwordController,
-                  hintText: 'Password',
-                  obscureText: true,
-                ),
-
-                const SizedBox(height: 10),
-
-                // confirm password textfield
-                LoginTextField(
-                  controller: context.userProvider.passwordController2,
-                  hintText: 'Confirm Password',
-                  obscureText: true,
-                ),
-
-                const SizedBox(height: 25),
-
-                // sign up button
-                LoginButton(
-                  onTap: signUserUp,
-                  buttonText: 'Sign Up',
-                ),
-
-                const SizedBox(height: 50),
-
-                // already have an account? login now
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Already have an account?',
-                      style: TextStyle(color: Colors.grey[700]),
+                  // welcome message
+                  const Text(
+                    'Let\'s Join Mega Family!',
+                    style: TextStyle(
+                      color: Color(0xFF707B81),
+                      fontSize: 18,
                     ),
-                    const SizedBox(width: 4),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.pop(context);
-                      },
-                      child: const Text(
-                        'Login now',
+                  ),
+
+                  const SizedBox(height: 30),
+
+                  // email textfield
+                  SizedBox(
+                    height: 70,
+                    child: LoginTextField(
+                      controller: context.userProvider.emailController,
+                      hintText: 'Email',
+                      obscureText: false,
+                    ),
+                  ),
+
+                  const SizedBox(height: 15),
+
+                  // password textfield
+                  SizedBox(
+                    height: 70,
+                    child: LoginTextField(
+                      controller: context.userProvider.passwordController,
+                      hintText: 'Password',
+                      obscureText: true,
+                    ),
+                  ),
+
+                  const SizedBox(height: 15),
+
+                  // confirm password textfield
+                  SizedBox(
+                    height: 70,
+                    child: LoginTextField(
+                      controller: context.userProvider.passwordController2,
+                      hintText: 'Confirm Password',
+                      obscureText: true,
+                    ),
+                  ),
+
+                  const SizedBox(height: 30),
+
+                  // sign up button
+                  SizedBox(
+                    width: double.infinity,
+                    height: 65,
+                    child: LoginButton(
+                      onTap: signUserUp,
+                      buttonText: 'Sign Up',
+                    ),
+                  ),
+
+
+                  const SizedBox(height: 60),
+
+                  // already have an account? login now
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text(
+                        'Already have an account?',
                         style: TextStyle(
-                          color: Colors.blue,
-                          fontWeight: FontWeight.bold,
+                          color: Color(0xFF707B81),
+                          fontSize: 14,
                         ),
                       ),
-                    ),
-                  ],
-                ),
-              ],
+                      const SizedBox(width: 6),
+                      InkWell(
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+                        borderRadius: BorderRadius.circular(4),
+                        splashColor: Colors.blue.withOpacity(0.2),
+                        child: const Padding(
+                          padding: EdgeInsets.symmetric(vertical: 4, horizontal: 2),
+                          child: Text(
+                            'Login now',
+                            style: TextStyle(
+                              color: Color(0xFF1976D2),
+                              fontWeight: FontWeight.bold,
+                              fontSize: 14,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 40),
+                ],
+              ),
             ),
           ),
         ),

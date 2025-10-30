@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:mega_shop/utility/extensions.dart';
-
 import '../utility/app_color.dart';
 
 class CustomSearchBar extends StatefulWidget {
@@ -14,12 +13,18 @@ class CustomSearchBar extends StatefulWidget {
   });
 
   @override
-  CustomSearchBarState createState() => CustomSearchBarState();
+  State<CustomSearchBar> createState() => _CustomSearchBarState();
 }
 
-class CustomSearchBarState extends State<CustomSearchBar> {
-  bool isExpanded = false;
-  final FocusNode _focusNode = FocusNode();
+class _CustomSearchBarState extends State<CustomSearchBar> {
+  bool _isExpanded = false;
+  late FocusNode _focusNode;
+
+  @override
+  void initState() {
+    super.initState();
+    _focusNode = FocusNode();
+  }
 
   @override
   void dispose() {
@@ -27,52 +32,51 @@ class CustomSearchBarState extends State<CustomSearchBar> {
     super.dispose();
   }
 
+  void _toggleExpand() {
+    setState(() {
+      _isExpanded = !_isExpanded;
+      if (!_isExpanded) _focusNode.unfocus();
+    });
+  }
+
+  void _clearSearch() {
+    widget.controller.clear();
+    _focusNode.unfocus();
+    context.dataProvider.filterProducts('');
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        setState(() {
-          isExpanded = !isExpanded;
-          if (!isExpanded) {
-            _focusNode.unfocus();
-          }
-        });
-      },
+      onTap: _toggleExpand,
       child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(14),
-          color: AppColor.lightGrey,
-        ),
         height: 50,
         padding: const EdgeInsets.symmetric(horizontal: 15),
-        child: FocusScope(
-          node: FocusScopeNode(),
-          child: Row(
-            children: [
-              const Icon(Icons.search),
-              const SizedBox(width: 10),
-              Expanded(
-                child: TextField(
-                  focusNode: _focusNode,
-                  controller: widget.controller,
-                  decoration: const InputDecoration(
-                    hintText: 'Search...',
-                    border: InputBorder.none,
-                  ),
-                  autofocus: false,
-                  onChanged: widget.onChanged,
+        decoration: BoxDecoration(
+          color: AppColor.lightGrey,
+          borderRadius: BorderRadius.circular(14),
+        ),
+        child: Row(
+          children: [
+            const Icon(Icons.search),
+            const SizedBox(width: 10),
+            Expanded(
+              child: TextField(
+                controller: widget.controller,
+                focusNode: _focusNode,
+                decoration: const InputDecoration(
+                  hintText: 'Search...',
+                  border: InputBorder.none,
                 ),
+                onChanged: widget.onChanged,
               ),
+            ),
+            if (_isExpanded)
               GestureDetector(
-                onTap: () {
-                  widget.controller.clear();
-                  _focusNode.unfocus();
-                  context.dataProvider.filterProducts('');
-                },
+                onTap: _clearSearch,
                 child: const Icon(Icons.close),
               ),
-            ],
-          ),
+          ],
         ),
       ),
     );

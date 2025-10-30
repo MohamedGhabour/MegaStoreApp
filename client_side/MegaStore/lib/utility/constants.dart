@@ -5,8 +5,8 @@
 // for virtual emulators you should use https://localhost:8080 instead
 // TODO: change according to yours
 
-const SERVER_URL = 'http://10.0.2.2:5000';
-const ONESIGNAL_APP_ID = 'YOUR_ONE_SIGNAL_APP_ID';
+const SERVER_URL = 'https://megastoreapp-production.up.railway.app';
+const ONESIGNAL_APP_ID = '983cb729-aa67-43b4-9b16-bb700b76b3ae';
 const CURRENCY_SYMBOL = "EGP ";
 
 // preference keys, no need to change
