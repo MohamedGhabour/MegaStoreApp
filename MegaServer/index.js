@@ -22,8 +22,14 @@ try {
 }
 
 // Middleware
-app.use(cors({ origin: "*" }));
+// Middleware
+app.use(cors({
+  origin: "*",
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+}));
 app.use(bodyParser.json());
+
 
 // Static folders
 app.use("/image/products", express.static("public/products"));
