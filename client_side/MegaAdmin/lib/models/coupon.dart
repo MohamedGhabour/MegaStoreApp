@@ -37,13 +37,13 @@ class Coupon {
     endDate = json['endDate'];
     status = json['status'];
     applicableCategory = json['applicableCategory'] != null
-        ? CatRef.fromJson(json['applicableCategory'])
+        ? new CatRef.fromJson(json['applicableCategory'])
         : null;
     applicableSubCategory = json['applicableSubCategory'] != null
-        ? CatRef.fromJson(json['applicableSubCategory'])
+        ? new CatRef.fromJson(json['applicableSubCategory'])
         : null;
     applicableProduct = json['applicableProduct'] != null
-        ? CatRef.fromJson(json['applicableProduct'])
+        ? new CatRef.fromJson(json['applicableProduct'])
         : null;
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
@@ -51,26 +51,26 @@ class Coupon {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['_id'] = sId;
-    data['couponCode'] = couponCode;
-    data['discountType'] = discountType;
-    data['discountAmount'] = discountAmount;
-    data['minimumPurchaseAmount'] = minimumPurchaseAmount;
-    data['endDate'] = endDate;
-    data['status'] = status;
-    if (applicableCategory != null) {
-      data['applicableCategory'] = applicableCategory!.toJson();
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['_id'] = this.sId;
+    data['couponCode'] = this.couponCode;
+    data['discountType'] = this.discountType;
+    data['discountAmount'] = this.discountAmount;
+    data['minimumPurchaseAmount'] = this.minimumPurchaseAmount;
+    data['endDate'] = this.endDate;
+    data['status'] = this.status;
+    if (this.applicableCategory != null) {
+      data['applicableCategory'] = this.applicableCategory!.toJson();
     }
-    if (applicableSubCategory != null) {
-      data['applicableSubCategory'] = applicableSubCategory!.toJson();
+    if (this.applicableSubCategory != null) {
+      data['applicableSubCategory'] = this.applicableSubCategory!.toJson();
     }
-    if (applicableProduct != null) {
-      data['applicableProduct'] = applicableProduct!.toJson();
+    if (this.applicableProduct != null) {
+      data['applicableProduct'] = this.applicableProduct!.toJson();
     }
-    data['createdAt'] = createdAt;
-    data['updatedAt'] = updatedAt;
-    data['__v'] = iV;
+    data['createdAt'] = this.createdAt;
+    data['updatedAt'] = this.updatedAt;
+    data['__v'] = this.iV;
     return data;
   }
 }
@@ -87,9 +87,9 @@ class CatRef {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['_id'] = sId;
-    data['name'] = name;
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['_id'] = this.sId;
+    data['name'] = this.name;
     return data;
   }
 }

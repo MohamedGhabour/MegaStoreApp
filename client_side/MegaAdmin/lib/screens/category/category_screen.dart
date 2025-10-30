@@ -8,18 +8,16 @@ import 'components/category_header.dart';
 import 'components/category_list_section.dart';
 
 class CategoryScreen extends StatelessWidget {
-  const CategoryScreen({super.key});
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: SingleChildScrollView(
         primary: false,
-        padding: const EdgeInsets.all(defaultPadding),
+        padding: EdgeInsets.all(defaultPadding),
         child: Column(
           children: [
-            const CategoryHeader(),
-            const SizedBox(height: defaultPadding),
+            CategoryHeader(),
+            SizedBox(height: defaultPadding),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -38,7 +36,7 @@ class CategoryScreen extends StatelessWidget {
                           ),
                           ElevatedButton.icon(
                             style: TextButton.styleFrom(
-                              padding: const EdgeInsets.symmetric(
+                              padding: EdgeInsets.symmetric(
                                 horizontal: defaultPadding * 1.5,
                                 vertical: defaultPadding,
                               ),
@@ -46,20 +44,20 @@ class CategoryScreen extends StatelessWidget {
                             onPressed: () {
                               showAddCategoryForm(context, null, 'Add Category');
                             },
-                            icon: const Icon(Icons.add),
-                            label: const Text("Add Category"),
+                            icon: Icon(Icons.add),
+                            label: Text("Add Category"),
                           ),
-                          const Gap(20),
+                          Gap(20),
                           IconButton(
                               onPressed: () {
                                 context.dataProvider
                                     .getAllCategories(showSnack: true);
                               },
-                              icon: const Icon(Icons.refresh)),
+                              icon: Icon(Icons.refresh)),
                         ],
                       ),
-                      const Gap(defaultPadding),
-                      const CategoryListSection(),
+                      Gap(defaultPadding),
+                      CategoryListSection(),
                     ],
                   ),
                 ),

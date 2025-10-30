@@ -1,6 +1,5 @@
 import 'dart:developer';
 
-import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:mega_admin/models/my_notification.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get_connect/http/src/response/response.dart';
@@ -56,9 +55,7 @@ class NotificationProvider extends ChangeNotifier {
             'Error: ${response.body?['message'] ?? response.statusText}');
       }
     } catch (e) {
-      if (kDebugMode) {
-        print(e);
-      }
+      print(e);
       SnackBarHelper.showErrorSnackBar('An error occurred: $e');
       rethrow;
     }
@@ -83,9 +80,7 @@ class NotificationProvider extends ChangeNotifier {
             'Error: ${response.body?['message'] ?? response.statusText}');
       }
     } catch (e) {
-      if (kDebugMode) {
-        print(e);
-      }
+      print(e);
       rethrow;
     }
   }
@@ -112,9 +107,7 @@ class NotificationProvider extends ChangeNotifier {
           NotificationResult? myNotificationResult = apiResponse.data;
           notificationResult = myNotificationResult;
 
-          if (kDebugMode) {
-            print(notificationResult?.platform);
-          }
+          print(notificationResult?.platform);
           log('notification successfully fetched');
 
           notifyListeners();

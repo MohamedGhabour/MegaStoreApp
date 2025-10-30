@@ -12,14 +12,14 @@ class CustomDatePicker extends StatefulWidget {
   final void Function(DateTime) onDateSelected;
 
   const CustomDatePicker({
-    super.key,
+    Key? key,
     required this.labelText,
     required this.controller,
     required this.initialDate,
     required this.firstDate,
     required this.lastDate,
     required this.onDateSelected,
-  });
+  }) : super(key: key);
 
   @override
   State<CustomDatePicker> createState() => _CustomDatePickerState();
@@ -35,7 +35,7 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
       builder: (BuildContext context, Widget? child) {
         return Theme(
           data: ThemeData.light().copyWith(
-            colorScheme: const ColorScheme.light(
+            colorScheme: ColorScheme.light(
               primary: primaryColor, // header background color
               onPrimary: Colors.white, // header text color
               onSurface: Colors.black, // body text color
@@ -66,7 +66,7 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
         controller: widget.controller,
         decoration: InputDecoration(
           labelText: widget.labelText,
-          suffixIcon: const Icon(Icons.calendar_today),
+          suffixIcon: Icon(Icons.calendar_today),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8.0),
           ),

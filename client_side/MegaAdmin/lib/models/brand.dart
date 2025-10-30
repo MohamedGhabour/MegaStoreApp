@@ -16,21 +16,21 @@ class Brand {
     sId = json['_id'];
     name = json['name'];
     subCategoryId = json['subcategoryId'] != null
-        ? SubcategoryId.fromJson(json['subcategoryId'])
+        ? new SubcategoryId.fromJson(json['subcategoryId'])
         : null;
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['_id'] = sId;
-    data['name'] = name;
-    if (subCategoryId != null) {
-      data['subcategoryId'] = subCategoryId!.toJson();
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['_id'] = this.sId;
+    data['name'] = this.name;
+    if (this.subCategoryId != null) {
+      data['subcategoryId'] = this.subCategoryId!.toJson();
     }
-    data['createdAt'] = createdAt;
-    data['updatedAt'] = updatedAt;
+    data['createdAt'] = this.createdAt;
+    data['updatedAt'] = this.updatedAt;
     return data;
   }
 }
@@ -54,12 +54,12 @@ class SubcategoryId {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['_id'] = sId;
-    data['name'] = name;
-    data['categoryId'] = categoryId;
-    data['createdAt'] = createdAt;
-    data['updatedAt'] = updatedAt;
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['_id'] = this.sId;
+    data['name'] = this.name;
+    data['categoryId'] = this.categoryId;
+    data['createdAt'] = this.createdAt;
+    data['updatedAt'] = this.updatedAt;
     return data;
   }
 }

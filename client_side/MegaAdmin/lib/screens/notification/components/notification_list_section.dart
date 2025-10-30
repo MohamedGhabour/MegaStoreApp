@@ -11,16 +11,16 @@ import 'view_notification_form.dart';
 
 class NotificationListSection extends StatelessWidget {
   const NotificationListSection({
-    super.key,
-  });
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(defaultPadding),
-      decoration: const BoxDecoration(
+      padding: EdgeInsets.all(defaultPadding),
+      decoration: BoxDecoration(
         color: secondaryColor,
-        borderRadius: BorderRadius.all(Radius.circular(10)),
+        borderRadius: const BorderRadius.all(Radius.circular(10)),
       ),
       child: SizedBox(
         width: double.infinity,
@@ -29,7 +29,7 @@ class NotificationListSection extends StatelessWidget {
             return DataTable(
               columnSpacing: defaultPadding,
               // minWidth: 600,
-              columns: const [
+              columns: [
                 DataColumn(
                   label: Text("Title"),
                 ),
@@ -85,7 +85,7 @@ DataRow notificationDataRow(
               child: Text(
                 index.toString(),
                 textAlign: TextAlign.center,
-                style: const TextStyle(fontSize: 12),
+                style: TextStyle(fontSize: 12),
               ),
             ),
             Padding(
@@ -101,7 +101,7 @@ DataRow notificationDataRow(
           onPressed: () {
             if (edit != null) edit();
           },
-          icon: const Icon(
+          icon: Icon(
             Icons.remove_red_eye_sharp,
             color: Colors.white,
           ))),
@@ -109,7 +109,7 @@ DataRow notificationDataRow(
           onPressed: () {
             if (delete != null) delete();
           },
-          icon: const Icon(
+          icon: Icon(
             Icons.delete,
             color: Colors.red,
           ))),

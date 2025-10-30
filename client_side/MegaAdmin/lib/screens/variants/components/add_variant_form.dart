@@ -22,7 +22,7 @@ class VariantSubmitForm extends StatelessWidget {
       child: Form(
         key: context.variantProvider.addVariantsFormKey,
         child: Container(
-          padding: const EdgeInsets.all(defaultPadding),
+          padding: EdgeInsets.all(defaultPadding),
           width: MediaQuery.of(context).size.width * 0.5,
           decoration: BoxDecoration(
             color: bgColor,
@@ -31,15 +31,15 @@ class VariantSubmitForm extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const SizedBox(height: defaultPadding),
+              SizedBox(height: defaultPadding),
               Row(
                 children: [
                   Expanded(
                     child: Consumer<VariantsProvider>(
                       builder: (context, variantProvider, child) {
-                        List<VariantType> sortedVariantTypes =
+                        List<VariantType> _sortedVariantTypes =
                             List.from(context.dataProvider.variantTypes);
-                        sortedVariantTypes.sort((a, b) {
+                        _sortedVariantTypes.sort((a, b) {
                           if (a.name == null && b.name == null) {
                             return 0;
                           } else if (a.name == null) {
@@ -53,7 +53,7 @@ class VariantSubmitForm extends StatelessWidget {
 
                         return CustomDropdown(
                           initialValue: variantProvider.selectedVariantType,
-                          items: sortedVariantTypes,
+                          items: _sortedVariantTypes,
                           hintText: 'Select Variant Type',
                           displayItem: (VariantType? variantType) =>
                               variantType?.name ?? '',
@@ -86,7 +86,7 @@ class VariantSubmitForm extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: defaultPadding * 2),
+              SizedBox(height: defaultPadding * 2),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -98,9 +98,9 @@ class VariantSubmitForm extends StatelessWidget {
                     onPressed: () {
                       Navigator.of(context).pop(); // Close the popup
                     },
-                    child: const Text('Cancel'),
+                    child: Text('Cancel'),
                   ),
-                  const SizedBox(width: defaultPadding),
+                  SizedBox(width: defaultPadding),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       foregroundColor: Colors.white,
@@ -118,7 +118,7 @@ class VariantSubmitForm extends StatelessWidget {
                         Navigator.of(context).pop();
                       }
                     },
-                    child: const Text('Submit'),
+                    child: Text('Submit'),
                   ),
                 ],
               ),
@@ -139,7 +139,7 @@ void showAddVariantForm(BuildContext context, Variant? variant) {
         backgroundColor: bgColor,
         title: Center(
             child: Text('Add Variant'.toUpperCase(),
-                style: const TextStyle(color: primaryColor))),
+                style: TextStyle(color: primaryColor))),
         content: VariantSubmitForm(variant: variant),
       );
     },

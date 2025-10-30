@@ -59,12 +59,10 @@ void main() {
     ChangeNotifierProvider(
       create: (context) => NotificationProvider(context.dataProvider),
     ),
-  ], child: const MyApp()));
+  ], child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
@@ -76,8 +74,8 @@ class MyApp extends StatelessWidget {
             .apply(bodyColor: Colors.white),
         canvasColor: secondaryColor,
       ),
-      initialRoute: AppPages.login,
-      unknownRoute: GetPage(name: '/notFound', page: () => const MainScreen()),
+      initialRoute: AppPages.HOME,
+      unknownRoute: GetPage(name: '/notFound', page: () => MainScreen()),
       defaultTransition: Transition.cupertino,
       getPages: AppPages.routes,
     );

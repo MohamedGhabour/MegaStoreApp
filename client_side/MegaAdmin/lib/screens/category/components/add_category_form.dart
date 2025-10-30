@@ -16,14 +16,13 @@ class CategorySubmitForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final catProvider = context.categoryProvider;
-    catProvider.setDataForUpdateCategory(category);
+    context.categoryProvider.setDataForUpdateCategory(category);
 
     return SingleChildScrollView(
       child: Form(
-        key: catProvider.addCategoryFormKey,
+        key: context.categoryProvider.addCategoryFormKey,
         child: Container(
-          padding: const EdgeInsets.all(defaultPadding),
+          padding: EdgeInsets.all(defaultPadding),
           width: MediaQuery.of(context).size.width * 0.3,
           decoration: BoxDecoration(
             color: bgColor,
@@ -32,24 +31,24 @@ class CategorySubmitForm extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Gap(defaultPadding),
+              Gap(defaultPadding),
               Consumer<CategoryProvider>(
-                builder: (context, provider, child) {
+                builder: (context, catProvider, child) {
                   return CategoryImageCard(
                     labelText: "Image",
-                    imageFile: provider.selectedImage,
+                    imageFile: catProvider.selectedImage,
                     imageUrlForUpdateImage: category?.image == null
                         ? category?.image
-                        : '$MAIN_URL${category!.image}',
+                        : '${MAIN_URL}${category!.image}',
                     onTap: () {
-                      provider.pickImage();
+                      catProvider.pickImage();
                     },
                   );
                 },
               ),
-              const Gap(defaultPadding),
+              Gap(defaultPadding),
               CustomTextField(
-                controller: catProvider.categoryNameCtrl,
+                controller: context.categoryProvider.categoryNameCtrl,
                 labelText: 'Category Name',
                 onSave: (val) {},
                 validator: (value) {
@@ -59,7 +58,7 @@ class CategorySubmitForm extends StatelessWidget {
                   return null;
                 },
               ),
-              const Gap(defaultPadding * 2),
+              Gap(defaultPadding * 2),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -69,26 +68,31 @@ class CategorySubmitForm extends StatelessWidget {
                       backgroundColor: secondaryColor,
                     ),
                     onPressed: () {
-                      catProvider.clearFields();
-                      Navigator.of(context).pop();
+                      context.categoryProvider.clearFields();
+                      Navigator.of(context).pop(); // Close the popup
                     },
-                    child: const Text('Cancel'),
+                    child: Text('Cancel'),
                   ),
-                  const Gap(defaultPadding),
+                  Gap(defaultPadding),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       foregroundColor: Colors.white,
                       backgroundColor: primaryColor,
                     ),
                     onPressed: () {
-                      if (catProvider.addCategoryFormKey.currentState!
+                      // Validate and save the form
+                      if (context
+                          .categoryProvider.addCategoryFormKey.currentState!
                           .validate()) {
-                        catProvider.addCategoryFormKey.currentState!.save();
-                        catProvider.submitCategory();
+                        context
+                            .categoryProvider.addCategoryFormKey.currentState!
+                            .save();
+                        context.categoryProvider.submitCategory();
+
                         Navigator.of(context).pop();
                       }
                     },
-                    child: const Text('Submit'),
+                    child: Text('Submit'),
                   ),
                 ],
               ),
@@ -100,26 +104,24 @@ class CategorySubmitForm extends StatelessWidget {
   }
 }
 
-// How to show the category popup safely
+// How to show the category popup
 void showAddCategoryForm(
     BuildContext context, Category? category, String buttonText) {
-  final catProvider = context.categoryProvider; // احفظ الـ provider
-
   showDialog(
     context: context,
-    builder: (BuildContext dialogContext) {
+    builder: (BuildContext context) {
       return AlertDialog(
         backgroundColor: bgColor,
         title: Center(
           child: Text(
             buttonText.toUpperCase(),
-            style: const TextStyle(color: primaryColor),
+            style: TextStyle(color: primaryColor),
           ),
         ),
         content: CategorySubmitForm(category: category),
       );
     },
   ).then((val) {
-    catProvider.clearFields(); // استخدم المتغير المخزن وليس الـ context بعد async
+    context.categoryProvider.clearFields();
   });
 }

@@ -38,24 +38,26 @@ class Product {
     description = json['description'];
     quantity = json['quantity'];
     price = json['price']?.toDouble();
+    ;
     offerPrice = json['offerPrice']?.toDouble();
+    ;
     proCategoryId = json['proCategoryId'] != null
-        ? ProRef.fromJson(json['proCategoryId'])
+        ? new ProRef.fromJson(json['proCategoryId'])
         : null;
     proSubCategoryId = json['proSubCategoryId'] != null
-        ? ProRef.fromJson(json['proSubCategoryId'])
+        ? new ProRef.fromJson(json['proSubCategoryId'])
         : null;
     proBrandId = json['proBrandId'] != null
-        ? ProRef.fromJson(json['proBrandId'])
+        ? new ProRef.fromJson(json['proBrandId'])
         : null;
     proVariantTypeId = json['proVariantTypeId'] != null
-        ? ProTypeRef.fromJson(json['proVariantTypeId'])
+        ? new ProTypeRef.fromJson(json['proVariantTypeId'])
         : null;
     proVariantId = json['proVariantId'].cast<String>();
     if (json['images'] != null) {
       images = <Images>[];
       json['images'].forEach((v) {
-        images!.add(Images.fromJson(v));
+        images!.add(new Images.fromJson(v));
       });
     }
     createdAt = json['createdAt'];
@@ -64,32 +66,32 @@ class Product {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['_id'] = sId;
-    data['name'] = name;
-    data['description'] = description;
-    data['quantity'] = quantity;
-    data['price'] = price;
-    data['offerPrice'] = offerPrice;
-    if (proCategoryId != null) {
-      data['proCategoryId'] = proCategoryId!.toJson();
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['_id'] = this.sId;
+    data['name'] = this.name;
+    data['description'] = this.description;
+    data['quantity'] = this.quantity;
+    data['price'] = this.price;
+    data['offerPrice'] = this.offerPrice;
+    if (this.proCategoryId != null) {
+      data['proCategoryId'] = this.proCategoryId!.toJson();
     }
-    if (proSubCategoryId != null) {
-      data['proSubCategoryId'] = proSubCategoryId!.toJson();
+    if (this.proSubCategoryId != null) {
+      data['proSubCategoryId'] = this.proSubCategoryId!.toJson();
     }
-    if (proBrandId != null) {
-      data['proBrandId'] = proBrandId!.toJson();
+    if (this.proBrandId != null) {
+      data['proBrandId'] = this.proBrandId!.toJson();
     }
-    if (proVariantTypeId != null) {
-      data['proVariantTypeId'] = proVariantTypeId!.toJson();
+    if (this.proVariantTypeId != null) {
+      data['proVariantTypeId'] = this.proVariantTypeId!.toJson();
     }
-    data['proVariantId'] = proVariantId;
-    if (images != null) {
-      data['images'] = images!.map((v) => v.toJson()).toList();
+    data['proVariantId'] = this.proVariantId;
+    if (this.images != null) {
+      data['images'] = this.images!.map((v) => v.toJson()).toList();
     }
-    data['createdAt'] = createdAt;
-    data['updatedAt'] = updatedAt;
-    data['__v'] = iV;
+    data['createdAt'] = this.createdAt;
+    data['updatedAt'] = this.updatedAt;
+    data['__v'] = this.iV;
     return data;
   }
 }
@@ -106,9 +108,9 @@ class ProRef {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['_id'] = sId;
-    data['name'] = name;
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['_id'] = this.sId;
+    data['name'] = this.name;
     return data;
   }
 }
@@ -125,9 +127,9 @@ class ProTypeRef {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['_id'] = sId;
-    data['type'] = type;
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['_id'] = this.sId;
+    data['type'] = this.type;
     return data;
   }
 }
@@ -146,10 +148,10 @@ class Images {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['image'] = image;
-    data['url'] = url;
-    data['_id'] = sId;
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['image'] = this.image;
+    data['url'] = this.url;
+    data['_id'] = this.sId;
     return data;
   }
 }

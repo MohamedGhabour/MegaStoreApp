@@ -8,18 +8,16 @@ import 'components/variant_type_header.dart';
 import 'components/variant_type_list_section.dart';
 
 class VariantsTypeScreen extends StatelessWidget {
-  const VariantsTypeScreen({super.key});
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: SingleChildScrollView(
         primary: false,
-        padding: const EdgeInsets.all(defaultPadding),
+        padding: EdgeInsets.all(defaultPadding),
         child: Column(
           children: [
-            const VariantsTypeHeader(),
-            const Gap(defaultPadding),
+            VariantsTypeHeader(),
+            Gap(defaultPadding),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -38,7 +36,7 @@ class VariantsTypeScreen extends StatelessWidget {
                           ),
                           ElevatedButton.icon(
                             style: TextButton.styleFrom(
-                              padding: const EdgeInsets.symmetric(
+                              padding: EdgeInsets.symmetric(
                                 horizontal: defaultPadding * 1.5,
                                 vertical: defaultPadding,
                               ),
@@ -46,20 +44,20 @@ class VariantsTypeScreen extends StatelessWidget {
                             onPressed: () {
                               showAddVariantsTypeForm(context, null);
                             },
-                            icon: const Icon(Icons.add),
-                            label: const Text("Add Variant Type"),
+                            icon: Icon(Icons.add),
+                            label: Text("Add Variant Type"),
                           ),
-                          const Gap(20),
+                          Gap(20),
                           IconButton(
                               onPressed: () {
                                 context.dataProvider
                                     .getAllVariantTypes(showSnack: true);
                               },
-                              icon: const Icon(Icons.refresh)),
+                              icon: Icon(Icons.refresh)),
                         ],
                       ),
-                      const Gap(defaultPadding),
-                      const VariantsTypeListSection(),
+                      Gap(defaultPadding),
+                      VariantsTypeListSection(),
                     ],
                   ),
                 ),

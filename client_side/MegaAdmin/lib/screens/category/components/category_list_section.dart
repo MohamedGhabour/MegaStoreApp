@@ -10,16 +10,16 @@ import 'add_category_form.dart';
 
 class CategoryListSection extends StatelessWidget {
   const CategoryListSection({
-    super.key,
-  });
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(defaultPadding),
-      decoration: const BoxDecoration(
+      padding: EdgeInsets.all(defaultPadding),
+      decoration: BoxDecoration(
         color: secondaryColor,
-        borderRadius: BorderRadius.all(Radius.circular(10)),
+        borderRadius: const BorderRadius.all(Radius.circular(10)),
       ),
       child: SizedBox(
         width: double.infinity,
@@ -28,7 +28,7 @@ class CategoryListSection extends StatelessWidget {
             return DataTable(
               columnSpacing: defaultPadding,
               // minWidth: 600,
-              columns: const [
+              columns: [
                 DataColumn(
                   label: Text("Category Name"),
                 ),
@@ -61,7 +61,7 @@ class CategoryListSection extends StatelessWidget {
   }
 }
 
-DataRow categoryDataRow(BuildContext context, Category catInfo,
+DataRow categoryDataRow(BuildContext context, Category CatInfo,
     {Function? edit, Function? delete}) {
   return DataRow(
     cells: [
@@ -69,29 +69,29 @@ DataRow categoryDataRow(BuildContext context, Category catInfo,
         Row(
           children: [
             Image.network(
-              '$MAIN_URL${catInfo.image}',
+              '${MAIN_URL}${CatInfo.image}',
               height: 30,
               width: 30,
               errorBuilder: (BuildContext context, Object exception,
                   StackTrace? stackTrace) {
-                return const Icon(Icons.error);
+                return Icon(Icons.error);
               },
               color: Colors.white,
               colorBlendMode: BlendMode.srcIn,
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
-              child: Text(catInfo.name ?? ''),
+              child: Text(CatInfo.name ?? ''),
             ),
           ],
         ),
       ),
-      DataCell(Text(formatTimestamp(context, catInfo.createdAt))),
+      DataCell(Text(formatTimestamp(context, CatInfo.createdAt))),
       DataCell(IconButton(
           onPressed: () {
             if (edit != null) edit();
           },
-          icon: const Icon(
+          icon: Icon(
             Icons.edit,
             color: Colors.white,
           ))),
@@ -99,7 +99,7 @@ DataRow categoryDataRow(BuildContext context, Category catInfo,
           onPressed: () {
             if (delete != null) delete();
           },
-          icon: const Icon(
+          icon: Icon(
             Icons.delete,
             color: Colors.red,
           ))),

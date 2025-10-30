@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
@@ -17,7 +16,7 @@ import '../provider/coupon_code_provider.dart';
 class CouponSubmitForm extends StatelessWidget {
   final Coupon? coupon;
 
-  const CouponSubmitForm({super.key, this.coupon});
+  const CouponSubmitForm({Key? key, this.coupon}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +26,7 @@ class CouponSubmitForm extends StatelessWidget {
         key: context.couponCodeProvider.addCouponFormKey,
         child: Container(
           width: MediaQuery.of(context).size.width * 0.7,
-          padding: const EdgeInsets.all(defaultPadding),
+          padding: EdgeInsets.all(defaultPadding),
           decoration: BoxDecoration(
             color: bgColor,
             borderRadius: BorderRadius.circular(12.0),
@@ -35,7 +34,7 @@ class CouponSubmitForm extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Gap(defaultPadding),
+              Gap(defaultPadding),
               Row(
                 children: [
                   Expanded(
@@ -56,7 +55,7 @@ class CouponSubmitForm extends StatelessWidget {
                       key: GlobalKey(),
                       hintText: 'Discount Type',
                       // do not change items, or must change in server side too
-                      items: const ['fixed', 'percentage'],
+                      items: ['fixed', 'percentage'],
                       initialValue:
                           context.couponCodeProvider.selectedDiscountType,
                       onChanged: (newValue) {
@@ -74,7 +73,7 @@ class CouponSubmitForm extends StatelessWidget {
                   ),
                 ],
               ),
-              const Gap(defaultPadding),
+              Gap(defaultPadding),
               Row(
                 children: [
                   Expanded(
@@ -108,7 +107,7 @@ class CouponSubmitForm extends StatelessWidget {
                   ),
                 ],
               ),
-              const Gap(defaultPadding),
+              Gap(defaultPadding),
               Row(
                 children: [
                   Expanded(
@@ -119,9 +118,7 @@ class CouponSubmitForm extends StatelessWidget {
                       firstDate: DateTime(2000),
                       lastDate: DateTime(2100),
                       onDateSelected: (DateTime date) {
-                        if (kDebugMode) {
-                          print('Selected Date: $date');
-                        }
+                        print('Selected Date: $date');
                       },
                     ),
                   ),
@@ -131,7 +128,7 @@ class CouponSubmitForm extends StatelessWidget {
                       hintText: 'Status',
                       initialValue:
                           context.couponCodeProvider.selectedCouponStatus,
-                      items: const ['active', 'inactive'],
+                      items: ['active', 'inactive'],
                       displayItem: (val) => val,
                       onChanged: (newValue) {
                         context.couponCodeProvider.selectedCouponStatus =
@@ -152,9 +149,9 @@ class CouponSubmitForm extends StatelessWidget {
                   Expanded(
                     child: Consumer<CouponCodeProvider>(
                       builder: (context, couponProvider, child) {
-                        List<Category> sortedCategories =
+                        List<Category> _sortedCategories =
                             List.from(context.dataProvider.categories);
-                        sortedCategories.sort((a, b) {
+                        _sortedCategories.sort((a, b) {
                           if (a.name == null && b.name == null) {
                             return 0;
                           } else if (a.name == null) {
@@ -169,7 +166,7 @@ class CouponSubmitForm extends StatelessWidget {
                         return CustomDropdown(
                           initialValue: couponProvider.selectedCategory,
                           hintText: 'Select Category',
-                          items: sortedCategories,
+                          items: _sortedCategories,
                           displayItem: (Category? category) =>
                               category?.name ?? '',
                           onChanged: (newValue) {
@@ -187,9 +184,9 @@ class CouponSubmitForm extends StatelessWidget {
                   Expanded(
                     child: Consumer<CouponCodeProvider>(
                       builder: (context, couponProvider, child) {
-                        List<SubCategory> sortedSubCategories =
+                        List<SubCategory> _sortedSubCategories =
                             List.from(context.dataProvider.subCategories);
-                        sortedSubCategories.sort((a, b) {
+                        _sortedSubCategories.sort((a, b) {
                           if (a.name == null && b.name == null) {
                             return 0;
                           } else if (a.name == null) {
@@ -204,7 +201,7 @@ class CouponSubmitForm extends StatelessWidget {
                         return CustomDropdown(
                           initialValue: couponProvider.selectedSubCategory,
                           hintText: 'Select Sub Category',
-                          items: sortedSubCategories,
+                          items: _sortedSubCategories,
                           displayItem: (SubCategory? subCategory) =>
                               subCategory?.name ?? '',
                           onChanged: (newValue) {
@@ -222,9 +219,9 @@ class CouponSubmitForm extends StatelessWidget {
                   Expanded(
                     child: Consumer<CouponCodeProvider>(
                       builder: (context, couponProvider, child) {
-                        List<Product> sortedProducts =
+                        List<Product> _sortedProducts =
                             List.from(context.dataProvider.products);
-                        sortedProducts.sort((a, b) {
+                        _sortedProducts.sort((a, b) {
                           if (a.name == null && b.name == null) {
                             return 0;
                           } else if (a.name == null) {
@@ -239,7 +236,7 @@ class CouponSubmitForm extends StatelessWidget {
                         return CustomDropdown(
                           initialValue: couponProvider.selectedProduct,
                           hintText: 'Select Product',
-                          items: sortedProducts,
+                          items: _sortedProducts,
                           displayItem: (Product? product) =>
                               product?.name ?? '',
                           onChanged: (newValue) {
@@ -256,7 +253,7 @@ class CouponSubmitForm extends StatelessWidget {
                   ),
                 ],
               ),
-              const Gap(defaultPadding),
+              Gap(defaultPadding),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -268,9 +265,9 @@ class CouponSubmitForm extends StatelessWidget {
                     onPressed: () {
                       Navigator.of(context).pop(); // Close the popup
                     },
-                    child: const Text('Cancel'),
+                    child: Text('Cancel'),
                   ),
-                  const SizedBox(width: defaultPadding),
+                  SizedBox(width: defaultPadding),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       foregroundColor: Colors.white,
@@ -289,7 +286,7 @@ class CouponSubmitForm extends StatelessWidget {
                         Navigator.of(context).pop();
                       }
                     },
-                    child: const Text('Submit'),
+                    child: Text('Submit'),
                   ),
                 ],
               ),
@@ -310,7 +307,7 @@ void showAddCouponForm(BuildContext context, Coupon? coupon) {
         backgroundColor: bgColor,
         title: Center(
             child: Text('Create Coupon'.toUpperCase(),
-                style: const TextStyle(color: primaryColor))),
+                style: TextStyle(color: primaryColor))),
         content: CouponSubmitForm(coupon: coupon),
       );
     },

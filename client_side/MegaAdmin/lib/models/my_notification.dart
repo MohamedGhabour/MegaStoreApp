@@ -30,15 +30,15 @@ class MyNotification {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['_id'] = sId;
-    data['notificationId'] = notificationId;
-    data['title'] = title;
-    data['description'] = description;
-    data['imageUrl'] = imageUrl;
-    data['createdAt'] = createdAt;
-    data['updatedAt'] = updatedAt;
-    data['__v'] = iV;
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['_id'] = this.sId;
+    data['notificationId'] = this.notificationId;
+    data['title'] = this.title;
+    data['description'] = this.description;
+    data['imageUrl'] = this.imageUrl;
+    data['createdAt'] = this.createdAt;
+    data['updatedAt'] = this.updatedAt;
+    data['__v'] = this.iV;
     return data;
   }
 }

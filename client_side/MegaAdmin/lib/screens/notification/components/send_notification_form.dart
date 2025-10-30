@@ -14,7 +14,7 @@ class SendNotificationForm extends StatelessWidget {
       child: Form(
         key: context.notificationProvider.sendNotificationFormKey,
         child: Container(
-          padding: const EdgeInsets.all(defaultPadding),
+          padding: EdgeInsets.all(defaultPadding),
           width: MediaQuery.of(context).size.width * 0.5,
           decoration: BoxDecoration(
             color: bgColor,
@@ -23,7 +23,7 @@ class SendNotificationForm extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Gap(defaultPadding),
+              Gap(defaultPadding),
               CustomTextField(
                 controller: context.notificationProvider.titleCtrl,
                 labelText: 'Enter Notification Title...',
@@ -52,7 +52,7 @@ class SendNotificationForm extends StatelessWidget {
                 labelText: 'Enter Notification Image Url...',
                 onSave: (val) {},
               ),
-              const Gap(defaultPadding * 2),
+              Gap(defaultPadding * 2),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -64,9 +64,9 @@ class SendNotificationForm extends StatelessWidget {
                     onPressed: () {
                       Navigator.of(context).pop();
                     },
-                    child: const Text('Cancel'),
+                    child: Text('Cancel'),
                   ),
-                  const SizedBox(width: defaultPadding),
+                  SizedBox(width: defaultPadding),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       foregroundColor: Colors.white,
@@ -84,7 +84,7 @@ class SendNotificationForm extends StatelessWidget {
                         Navigator.of(context).pop();
                       }
                     },
-                    child: const Text('Send'),
+                    child: Text('Send'),
                   ),
                 ],
               ),
@@ -105,8 +105,8 @@ void sendNotificationFormForm(BuildContext context) {
         backgroundColor: bgColor,
         title: Center(
             child: Text('Send Notification'.toUpperCase(),
-                style: const TextStyle(color: primaryColor))),
-        content: const SendNotificationForm(),
+                style: TextStyle(color: primaryColor))),
+        content: SendNotificationForm(),
       );
     },
   );

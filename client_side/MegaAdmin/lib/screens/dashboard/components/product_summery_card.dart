@@ -6,10 +6,10 @@ import '../../../utility/constants.dart';
 
 class ProductSummeryCard extends StatelessWidget {
   const ProductSummeryCard({
-    super.key,
+    Key? key,
     required this.info,
     required this.onTap,
-  });
+  }) : super(key: key);
 
   final ProductSummeryInfo info;
   final Function(String?) onTap;
@@ -21,10 +21,10 @@ class ProductSummeryCard extends StatelessWidget {
         onTap(info.title);
       },
       child: Container(
-        padding: const EdgeInsets.all(defaultPadding),
-        decoration: const BoxDecoration(
+        padding: EdgeInsets.all(defaultPadding),
+        decoration: BoxDecoration(
           color: secondaryColor,
-          borderRadius: BorderRadius.all(Radius.circular(10)),
+          borderRadius: const BorderRadius.all(Radius.circular(10)),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -34,11 +34,11 @@ class ProductSummeryCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Container(
-                  padding: const EdgeInsets.all(defaultPadding * 0.75),
+                  padding: EdgeInsets.all(defaultPadding * 0.75),
                   height: 40,
                   width: 40,
                   decoration: BoxDecoration(
-                    color: info.color!.withAlpha((0.1 * 255).round()),
+                    color: info.color!.withOpacity(0.1),
                     borderRadius: const BorderRadius.all(Radius.circular(10)),
                   ),
                   child: SvgPicture.asset(
@@ -47,7 +47,7 @@ class ProductSummeryCard extends StatelessWidget {
                         info.color ?? Colors.black, BlendMode.srcIn),
                   ),
                 ),
-                const Icon(Icons.more_vert, color: Colors.white54)
+                Icon(Icons.more_vert, color: Colors.white54)
               ],
             ),
             Text(
@@ -80,10 +80,10 @@ class ProductSummeryCard extends StatelessWidget {
 
 class ProgressLine extends StatelessWidget {
   const ProgressLine({
-    super.key,
+    Key? key,
     this.color = primaryColor,
     required this.percentage,
-  });
+  }) : super(key: key);
 
   final Color? color;
   final double? percentage;
@@ -96,8 +96,8 @@ class ProgressLine extends StatelessWidget {
           width: double.infinity,
           height: 5,
           decoration: BoxDecoration(
-            color: color!.withAlpha((0.1 * 255).round()),
-            borderRadius: const BorderRadius.all(Radius.circular(10)),
+            color: color!.withOpacity(0.1),
+            borderRadius: BorderRadius.all(Radius.circular(10)),
           ),
         ),
         LayoutBuilder(
@@ -106,7 +106,7 @@ class ProgressLine extends StatelessWidget {
             height: 5,
             decoration: BoxDecoration(
               color: color,
-              borderRadius: const BorderRadius.all(Radius.circular(10)),
+              borderRadius: BorderRadius.all(Radius.circular(10)),
             ),
           ),
         ),

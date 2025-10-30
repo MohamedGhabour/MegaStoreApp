@@ -11,7 +11,7 @@ import 'notification_statics_card.dart';
 class ViewNotificationForm extends StatelessWidget {
   final MyNotification? notification;
 
-  const ViewNotificationForm({super.key, this.notification});
+  const ViewNotificationForm({Key? key, this.notification}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +19,7 @@ class ViewNotificationForm extends StatelessWidget {
 
     return SingleChildScrollView(
       child: Container(
-        padding: const EdgeInsets.all(defaultPadding),
+        padding: EdgeInsets.all(defaultPadding),
         width: MediaQuery.of(context).size.width *
             0.5, // Adjust width based on screen size
         decoration: BoxDecoration(
@@ -27,10 +27,10 @@ class ViewNotificationForm extends StatelessWidget {
           borderRadius: BorderRadius.circular(12.0),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withAlpha((0.1 * 255).round()),
+              color: Colors.black.withOpacity(0.1),
               spreadRadius: 5,
               blurRadius: 7,
-              offset: const Offset(0, 3),
+              offset: Offset(0, 3),
             ),
           ],
         ),
@@ -41,13 +41,13 @@ class ViewNotificationForm extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(notification?.title ?? 'N/A',
-                    style: const TextStyle(fontSize: 16)),
+                    style: TextStyle(fontSize: 16)),
               ],
             ),
-            const Gap(10),
+            Gap(10),
             Container(
-              margin: const EdgeInsets.only(top: 20),
-              padding: const EdgeInsets.all(defaultPadding),
+              margin: EdgeInsets.only(top: 20),
+              padding: EdgeInsets.all(defaultPadding),
               decoration: BoxDecoration(
                 color: secondaryColor, // Light grey background to stand out
                 borderRadius: BorderRadius.circular(8.0),
@@ -108,7 +108,7 @@ class ViewNotificationForm extends StatelessWidget {
                 },
               ),
             ),
-            const Gap(10),
+            Gap(10),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -137,7 +137,7 @@ void viewNotificationStatics(
         backgroundColor: bgColor,
         title: Center(
             child: Text('Notification Statics'.toUpperCase(),
-                style: const TextStyle(color: primaryColor))),
+                style: TextStyle(color: primaryColor))),
         content: ViewNotificationForm(notification: notification),
       );
     },

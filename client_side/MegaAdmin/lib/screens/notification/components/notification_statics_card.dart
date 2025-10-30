@@ -11,20 +11,20 @@ class NotificationCard extends StatelessWidget {
   final double percentage;
 
   const NotificationCard({
-    super.key,
+    Key? key,
     required this.text,
     required this.color,
     required this.number,
     required this.percentage,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 5),
-      decoration: const BoxDecoration(
+      padding: EdgeInsets.symmetric(vertical: 5),
+      decoration: BoxDecoration(
         color: secondaryColor,
-        borderRadius: BorderRadius.all(Radius.circular(10)),
+        borderRadius: const BorderRadius.all(Radius.circular(10)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -34,29 +34,29 @@ class NotificationCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Container(
-                padding: const EdgeInsets.all(defaultPadding * 0.75),
+                padding: EdgeInsets.all(defaultPadding * 0.75),
                 height: 40,
                 width: 40,
                 decoration: BoxDecoration(
-                  color: color.withAlpha((0.1 * 255).round()),
+                  color: color.withOpacity(0.1),
                   borderRadius: const BorderRadius.all(Radius.circular(10)),
                 ),
                 child: SvgPicture.asset(
                   'assets/icons/notification.svg',
                   colorFilter:
-                      ColorFilter.mode(color, BlendMode.srcIn),
+                      ColorFilter.mode(color ?? Colors.black, BlendMode.srcIn),
                 ),
               ),
             ],
           ),
-          const SizedBox(
+          SizedBox(
             height: 6,
           ),
           ProgressLine(
             color: color,
             percentage: percentage,
           ),
-          const Gap(5),
+          Gap(5),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -77,10 +77,10 @@ class NotificationCard extends StatelessWidget {
 
 class ProgressLine extends StatelessWidget {
   const ProgressLine({
-    super.key,
+    Key? key,
     this.color = primaryColor,
     required this.percentage,
-  });
+  }) : super(key: key);
 
   final Color? color;
   final double? percentage;
@@ -93,8 +93,8 @@ class ProgressLine extends StatelessWidget {
           width: double.infinity,
           height: 5,
           decoration: BoxDecoration(
-            color: color!.withAlpha((0.1 * 255).round()),
-            borderRadius: const BorderRadius.all(Radius.circular(10)),
+            color: color!.withOpacity(0.1),
+            borderRadius: BorderRadius.all(Radius.circular(10)),
           ),
         ),
         LayoutBuilder(
@@ -103,7 +103,7 @@ class ProgressLine extends StatelessWidget {
             height: 5,
             decoration: BoxDecoration(
               color: color,
-              borderRadius: const BorderRadius.all(Radius.circular(10)),
+              borderRadius: BorderRadius.all(Radius.circular(10)),
             ),
           ),
         ),

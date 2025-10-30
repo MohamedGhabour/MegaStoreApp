@@ -10,18 +10,16 @@ import 'components/product_list_section.dart';
 import 'components/product_summery_section.dart';
 
 class DashboardScreen extends StatelessWidget {
-  const DashboardScreen({super.key});
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: SingleChildScrollView(
         primary: false,
-        padding: const EdgeInsets.all(defaultPadding),
+        padding: EdgeInsets.all(defaultPadding),
         child: Column(
           children: [
-            const DashBoardHeader(),
-            const Gap(defaultPadding),
+            DashBoardHeader(),
+            Gap(defaultPadding),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -40,7 +38,7 @@ class DashboardScreen extends StatelessWidget {
                           ),
                           ElevatedButton.icon(
                             style: TextButton.styleFrom(
-                              padding: const EdgeInsets.symmetric(
+                              padding: EdgeInsets.symmetric(
                                 horizontal: defaultPadding * 1.5,
                                 vertical: defaultPadding,
                               ),
@@ -48,28 +46,28 @@ class DashboardScreen extends StatelessWidget {
                             onPressed: () {
                               showAddProductForm(context, null);
                             },
-                            icon: const Icon(Icons.add),
-                            label: const Text("Add Product"),
+                            icon: Icon(Icons.add),
+                            label: Text("Add Product"),
                           ),
-                          const Gap(20),
+                          Gap(20),
                           IconButton(
                               onPressed: () {
                                 context.dataProvider.filterProductsByQuantity(
                                     context.dataProvider.productsType,
                                     showSnack: true);
                               },
-                              icon: const Icon(Icons.refresh)),
+                              icon: Icon(Icons.refresh)),
                         ],
                       ),
-                      const Gap(defaultPadding),
-                      const ProductSummerySection(),
-                      const Gap(defaultPadding),
-                      const ProductListSection(),
+                      Gap(defaultPadding),
+                      ProductSummerySection(),
+                      Gap(defaultPadding),
+                      ProductListSection(),
                     ],
                   ),
                 ),
-                const SizedBox(width: defaultPadding),
-                const Expanded(
+                SizedBox(width: defaultPadding),
+                Expanded(
                   flex: 2,
                   child: OrderDetailsSection(),
                 ),

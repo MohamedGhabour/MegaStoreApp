@@ -9,12 +9,12 @@ import 'product_summery_card.dart';
 
 class ProductSummerySection extends StatelessWidget {
   const ProductSummerySection({
-    super.key,
-  });
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final Size size = MediaQuery.of(context).size;
+    final Size _size = MediaQuery.of(context).size;
 
     return Consumer<DataProvider>(
       builder: (context, dataProvider, _) {
@@ -39,7 +39,7 @@ class ProductSummerySection extends StatelessWidget {
             title: STOCK_OUT_PRODUCTS,
             productsCount: outOfStockProduct,
             svgSrc: "assets/icons/Product2.svg",
-            color: const Color(0xFFEA3829),
+            color: Color(0xFFEA3829),
             percentage: totalProduct != 0
                 ? (outOfStockProduct / totalProduct) * 100
                 : 0,
@@ -48,7 +48,7 @@ class ProductSummerySection extends StatelessWidget {
             title: LIMITED_STOCK_PRODUCTS,
             productsCount: limitedStockProduct,
             svgSrc: "assets/icons/Product3.svg",
-            color: const Color(0xFFECBE23),
+            color: Color(0xFFECBE23),
             percentage: totalProduct != 0
                 ? (limitedStockProduct / totalProduct) * 100
                 : 0,
@@ -57,7 +57,7 @@ class ProductSummerySection extends StatelessWidget {
             title: OTHER_PRODUCTS,
             productsCount: otherStockProduct,
             svgSrc: "assets/icons/Product4.svg",
-            color: const Color(0xFF47e228),
+            color: Color(0xFF47e228),
             percentage: totalProduct != 0
                 ? (otherStockProduct / totalProduct) * 100
                 : 0,
@@ -67,14 +67,14 @@ class ProductSummerySection extends StatelessWidget {
         return Column(
           children: [
             GridView.builder(
-              physics: const NeverScrollableScrollPhysics(),
+              physics: NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               itemCount: productSummeryItems.length,
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 4,
                 crossAxisSpacing: defaultPadding,
                 mainAxisSpacing: defaultPadding,
-                childAspectRatio: size.width < 1400 ? 1.1 : 1.4,
+                childAspectRatio: _size.width < 1400 ? 1.1 : 1.4,
               ),
               itemBuilder: (context, index) => ProductSummeryCard(
                 info: productSummeryItems[index],

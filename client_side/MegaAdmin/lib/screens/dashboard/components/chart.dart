@@ -1,5 +1,3 @@
-// ignore_for_file: unused_local_variable
-
 import 'package:mega_admin/utility/extensions.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
@@ -10,8 +8,8 @@ import '../../../utility/constants.dart';
 
 class Chart extends StatelessWidget {
   const Chart({
-    super.key,
-  });
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +29,7 @@ class Chart extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const SizedBox(height: defaultPadding),
+                SizedBox(height: defaultPadding),
                 Consumer<DataProvider>(
                   builder: (context, dataProvider, child) {
                     return Text(
@@ -45,8 +43,8 @@ class Chart extends StatelessWidget {
                     );
                   },
                 ),
-                const SizedBox(height: defaultPadding),
-                const Text("Order")
+                SizedBox(height: defaultPadding),
+                Text("Order")
               ],
             ),
           ),
@@ -72,25 +70,25 @@ class Chart extends StatelessWidget {
 
     List<PieChartSectionData> pieChartSelectionData = [
       PieChartSectionData(
-        color: const Color(0xFFFFCF26),
+        color: Color(0xFFFFCF26),
         value: pendingOrder.toDouble(),
         showTitle: false,
         radius: 20,
       ),
       PieChartSectionData(
-        color: const Color(0xFFEE2727),
+        color: Color(0xFFEE2727),
         value: cancelledOrder.toDouble(),
         showTitle: false,
         radius: 20,
       ),
       PieChartSectionData(
-        color: const Color(0xFF2697FF),
+        color: Color(0xFF2697FF),
         value: shippedOrder.toDouble(),
         showTitle: false,
         radius: 20,
       ),
       PieChartSectionData(
-        color: const Color(0xFF26FF31),
+        color: Color(0xFF26FF31),
         value: deliveredOrder.toDouble(),
         showTitle: false,
         radius: 20,

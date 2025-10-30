@@ -60,9 +60,7 @@ class PosterProvider extends ChangeNotifier {
             'Error: ${response.body?['message'] ?? response.statusText}');
       }
     } catch (e) {
-      if (kDebugMode) {
-        print(e);
-      }
+      print(e);
       SnackBarHelper.showErrorSnackBar('An error occurred: $e');
       rethrow;
     }
@@ -101,9 +99,7 @@ class PosterProvider extends ChangeNotifier {
             'Error: ${response.body?['message'] ?? response.statusText}');
       }
     } catch (e) {
-      if (kDebugMode) {
-        print(e);
-      }
+      print(e);
       SnackBarHelper.showErrorSnackBar('An error occurred: $e');
       rethrow;
     }
@@ -129,9 +125,7 @@ class PosterProvider extends ChangeNotifier {
             'Error: ${response.body?['message'] ?? response.statusText}');
       }
     } catch (e) {
-      if (kDebugMode) {
-        print(e);
-      }
+      print(e);
       rethrow;
     }
   }

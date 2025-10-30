@@ -101,9 +101,7 @@ class DashBoardProvider extends ChangeNotifier {
             'Error: ${response.body?['message'] ?? response.statusText}');
       }
     } catch (e) {
-      if (kDebugMode) {
-        print(e);
-      }
+      print(e);
       SnackBarHelper.showErrorSnackBar('An error occurred: $e');
       rethrow;
     }
@@ -157,9 +155,7 @@ class DashBoardProvider extends ChangeNotifier {
             'Error: ${response.body?['message'] ?? response.statusText}');
       }
     } catch (e) {
-      if (kDebugMode) {
-        print(e);
-      }
+      print(e);
       SnackBarHelper.showErrorSnackBar('An error occurred: $e');
       rethrow;
     }
@@ -184,9 +180,7 @@ class DashBoardProvider extends ChangeNotifier {
             'Error: ${response.body?['message'] ?? response.statusText}');
       }
     } catch (e) {
-      if (kDebugMode) {
-        print(e);
-      }
+      print(e);
       rethrow;
     }
   }
@@ -222,19 +216,19 @@ class DashBoardProvider extends ChangeNotifier {
     // Loop over the provided image files and add them to the form data
     if (imgXFiles != null) {
       for (int i = 0; i < imgXFiles.length; i++) {
-        XFile? imgXFile = imgXFiles[i]['image${i + 1}'];
+        XFile? imgXFile = imgXFiles[i]['image' + (i + 1).toString()];
         if (imgXFile != null) {
           // Check if it's running on the web
           if (kIsWeb) {
             String fileName = imgXFile.name;
             Uint8List byteImg = await imgXFile.readAsBytes();
-            formData['image${i + 1}'] =
+            formData['image' + (i + 1).toString()] =
                 MultipartFile(byteImg, filename: fileName);
           } else {
             String filePath = imgXFile.path;
             String fileName = filePath.split('/').last;
-            formData['image${i + 1}'] =
-                MultipartFile(filePath, filename: fileName);
+            formData['image' + (i + 1).toString()] =
+                await MultipartFile(filePath, filename: fileName);
           }
         }
       }

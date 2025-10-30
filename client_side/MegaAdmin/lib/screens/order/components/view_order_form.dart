@@ -12,7 +12,7 @@ import '../provider/order_provider.dart';
 class OrderSubmitForm extends StatelessWidget {
   final Order? order;
 
-  const OrderSubmitForm({super.key, this.order});
+  const OrderSubmitForm({Key? key, this.order}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +20,7 @@ class OrderSubmitForm extends StatelessWidget {
     context.orderProvider.orderForUpdate = order;
     return SingleChildScrollView(
       child: Container(
-        padding: const EdgeInsets.all(defaultPadding),
+        padding: EdgeInsets.all(defaultPadding),
         width: MediaQuery.of(context).size.width *
             0.5, // Adjust width based on screen size
         decoration: BoxDecoration(
@@ -28,10 +28,10 @@ class OrderSubmitForm extends StatelessWidget {
           borderRadius: BorderRadius.circular(12.0),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withAlpha((0.1 * 255).round()),
+              color: Colors.black.withOpacity(0.1),
               spreadRadius: 5,
               blurRadius: 7,
-              offset: const Offset(0, 3),
+              offset: Offset(0, 3),
             ),
           ],
         ),
@@ -46,17 +46,17 @@ class OrderSubmitForm extends StatelessWidget {
                       child: formRow(
                           'Name:',
                           Text(order?.userID?.name ?? 'N/A',
-                              style: const TextStyle(fontSize: 16)))),
+                              style: TextStyle(fontSize: 16)))),
                   Expanded(
                       child: formRow(
                           'Order Id:',
                           Text(order?.sId ?? 'N/A',
-                              style: const TextStyle(fontSize: 12)))),
+                              style: TextStyle(fontSize: 12)))),
                 ],
               ),
               itemsSection(),
               addressSection(),
-              const Gap(10),
+              Gap(10),
               paymentDetailsSection(),
               formRow(
                 'Order Status:',
@@ -65,7 +65,7 @@ class OrderSubmitForm extends StatelessWidget {
                     return CustomDropdown(
                       hintText: 'Status',
                       initialValue: orderProvider.selectedOrderStatus,
-                      items: const [
+                      items: [
                         ORDER_STATUS_PENDING,
                         ORDER_STATUS_PROCESSING,
                         ORDER_STATUS_SHIPPED,
@@ -95,7 +95,7 @@ class OrderSubmitForm extends StatelessWidget {
                     onSave: (val) {},
                     controller: context.orderProvider.trackingUrlCtrl,
                   )),
-              const Gap(defaultPadding * 2),
+              Gap(defaultPadding * 2),
               actionButtons(context),
             ],
           ),
@@ -113,7 +113,7 @@ class OrderSubmitForm extends StatelessWidget {
           Expanded(
               flex: 1,
               child: Text(label,
-                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16))),
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16))),
           Expanded(flex: 2, child: dataWidget),
         ],
       ),
@@ -122,8 +122,8 @@ class OrderSubmitForm extends StatelessWidget {
 
   Widget addressSection() {
     return Container(
-      margin: const EdgeInsets.only(top: 20),
-      padding: const EdgeInsets.all(defaultPadding),
+      margin: EdgeInsets.only(top: 20),
+      padding: EdgeInsets.all(defaultPadding),
       decoration: BoxDecoration(
         color: secondaryColor, // Light grey background to stand out
         borderRadius: BorderRadius.circular(8.0),
@@ -133,7 +133,7 @@ class OrderSubmitForm extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Padding(
+          Padding(
             padding: EdgeInsets.symmetric(vertical: 8.0),
             child: Text(
               'Shipping Address',
@@ -146,23 +146,23 @@ class OrderSubmitForm extends StatelessWidget {
           formRow(
               'Phone:',
               Text(order?.shippingAddress?.phone ?? 'N/A',
-                  style: const TextStyle(fontSize: 16))),
+                  style: TextStyle(fontSize: 16))),
           formRow(
               'Street:',
               Text(order?.shippingAddress?.street ?? 'N/A',
-                  style: const TextStyle(fontSize: 16))),
+                  style: TextStyle(fontSize: 16))),
           formRow(
               'City:',
               Text(order?.shippingAddress?.city ?? 'N/A',
-                  style: const TextStyle(fontSize: 16))),
+                  style: TextStyle(fontSize: 16))),
           formRow(
               'Postal Code:',
               Text(order?.shippingAddress?.postalCode ?? 'N/A',
-                  style: const TextStyle(fontSize: 16))),
+                  style: TextStyle(fontSize: 16))),
           formRow(
               'Country:',
               Text(order?.shippingAddress?.country ?? 'N/A',
-                  style: const TextStyle(fontSize: 16))),
+                  style: TextStyle(fontSize: 16))),
         ],
       ),
     );
@@ -170,17 +170,17 @@ class OrderSubmitForm extends StatelessWidget {
 
   Widget paymentDetailsSection() {
     return Container(
-      margin: const EdgeInsets.only(top: 20),
-      padding: const EdgeInsets.all(defaultPadding),
+      margin: EdgeInsets.only(top: 20),
+      padding: EdgeInsets.all(defaultPadding),
       decoration: BoxDecoration(
         color: secondaryColor,
         border: Border.all(color: Colors.blueAccent),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withAlpha((0.2 * 255).round()),
+            color: Colors.grey.withOpacity(0.2),
             spreadRadius: 1,
             blurRadius: 3,
-            offset: const Offset(0, 1),
+            offset: Offset(0, 1),
           ),
         ],
         borderRadius: BorderRadius.circular(8.0),
@@ -188,7 +188,7 @@ class OrderSubmitForm extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Padding(
+          Padding(
             padding: EdgeInsets.symmetric(vertical: 8.0),
             child: Text(
               'Payment Details',
@@ -201,25 +201,25 @@ class OrderSubmitForm extends StatelessWidget {
           formRow(
               'Payment Method:',
               Text(order?.paymentMethod ?? 'N/A',
-                  style: const TextStyle(fontSize: 16))),
+                  style: TextStyle(fontSize: 16))),
           formRow(
               'Coupon Code:',
               Text(order?.couponCode?.couponCode ?? 'N/A',
-                  style: const TextStyle(fontSize: 16))),
+                  style: TextStyle(fontSize: 16))),
           formRow(
               'Order Sub Total:',
               Text(
                   '\$${order?.orderTotal?.subTotal?.toStringAsFixed(2) ?? 'N/A'}',
-                  style: const TextStyle(fontSize: 16))),
+                  style: TextStyle(fontSize: 16))),
           formRow(
               'Discount:',
               Text(
                   '\$${order?.orderTotal?.discount?.toStringAsFixed(2) ?? 'N/A'}',
-                  style: const TextStyle(fontSize: 16, color: Colors.red))),
+                  style: TextStyle(fontSize: 16, color: Colors.red))),
           formRow(
               'Grand Total:',
               Text('\$${order?.orderTotal?.total?.toStringAsFixed(2) ?? 'N/A'}',
-                  style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold))),
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold))),
         ],
       ),
     );
@@ -227,17 +227,17 @@ class OrderSubmitForm extends StatelessWidget {
 
   Widget itemsSection() {
     return Container(
-      margin: const EdgeInsets.only(top: 20),
-      padding: const EdgeInsets.all(defaultPadding),
+      margin: EdgeInsets.only(top: 20),
+      padding: EdgeInsets.all(defaultPadding),
       decoration: BoxDecoration(
         color: secondaryColor,
         border: Border.all(color: Colors.blueAccent),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withAlpha((0.2 * 255).round()),
+            color: Colors.grey.withOpacity(0.2),
             spreadRadius: 1,
             blurRadius: 3,
-            offset: const Offset(0, 1),
+            offset: Offset(0, 1),
           ),
         ],
         borderRadius: BorderRadius.circular(8.0),
@@ -245,7 +245,7 @@ class OrderSubmitForm extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Padding(
+          Padding(
             padding: EdgeInsets.symmetric(vertical: 8.0),
             child: Text(
               'Items',
@@ -256,12 +256,12 @@ class OrderSubmitForm extends StatelessWidget {
             ),
           ),
           _buildItemsList(),
-          const SizedBox(height: defaultPadding),
+          SizedBox(height: defaultPadding),
           // Add some spacing before the total price
           formRow(
             'Total Price:',
             Text('\$${order?.totalPrice?.toStringAsFixed(2) ?? 'N/A'}',
-                style: const TextStyle(fontSize: 16, color: Colors.green)),
+                style: TextStyle(fontSize: 16, color: Colors.green)),
           ),
         ],
       ),
@@ -270,20 +270,20 @@ class OrderSubmitForm extends StatelessWidget {
 
   Widget _buildItemsList() {
     if (order?.items == null || order!.items!.isEmpty) {
-      return const Text('No items', style: TextStyle(fontSize: 16));
+      return Text('No items', style: TextStyle(fontSize: 16));
     }
     return ListView.builder(
       shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
+      physics: NeverScrollableScrollPhysics(),
       // Disable scrolling within ListView
       itemCount: order!.items!.length,
       itemBuilder: (context, index) {
         final item = order!.items![index];
         return Padding(
-          padding: const EdgeInsets.only(bottom: 4.0), // Add spacing between items
+          padding: EdgeInsets.only(bottom: 4.0), // Add spacing between items
           child: Text(
               '${item.productName}: ${item.quantity} x \$${item.price?.toStringAsFixed(2)}',
-              style: const TextStyle(fontSize: 16)),
+              style: TextStyle(fontSize: 16)),
         );
       },
     );
@@ -298,7 +298,7 @@ class OrderSubmitForm extends StatelessWidget {
           onPressed: () => Navigator.of(context).pop(),
           child: const Text('Cancel'),
         ),
-        const Gap(defaultPadding),
+        Gap(defaultPadding),
         ElevatedButton(
           style: ElevatedButton.styleFrom(backgroundColor: primaryColor),
           onPressed: () {
@@ -330,7 +330,7 @@ void showOrderForm(BuildContext context, Order? order) {
         backgroundColor: bgColor,
         title: Center(
             child: Text('Order Details'.toUpperCase(),
-                style: const TextStyle(color: primaryColor))),
+                style: TextStyle(color: primaryColor))),
         content: OrderSubmitForm(order: order),
       );
     },

@@ -8,8 +8,8 @@ import 'order_info_card.dart';
 
 class OrderDetailsSection extends StatelessWidget {
   const OrderDetailsSection({
-    super.key,
-  });
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -28,23 +28,23 @@ class OrderDetailsSection extends StatelessWidget {
             status: ORDER_STATUS_DELIVERED);
 
         return Container(
-          padding: const EdgeInsets.all(defaultPadding),
-          decoration: const BoxDecoration(
+          padding: EdgeInsets.all(defaultPadding),
+          decoration: BoxDecoration(
             color: secondaryColor,
-            borderRadius: BorderRadius.all(Radius.circular(10)),
+            borderRadius: const BorderRadius.all(Radius.circular(10)),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
+              Text(
                 "Orders Details",
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w500,
                 ),
               ),
-              const SizedBox(height: defaultPadding),
-              const Chart(),
+              SizedBox(height: defaultPadding),
+              Chart(),
               OrderInfoCard(
                 svgSrc: "assets/icons/delivery1.svg",
                 title: "All Orders",

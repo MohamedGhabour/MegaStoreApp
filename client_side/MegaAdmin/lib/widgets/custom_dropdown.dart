@@ -9,14 +9,14 @@ class CustomDropdown<T> extends StatelessWidget {
   final String Function(T) displayItem;
 
   const CustomDropdown({
-    super.key,
+    Key? key,
     this.initialValue,
     required this.items,
     required this.onChanged,
     this.validator,
     this.hintText = 'Select an option',
     required this.displayItem,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +30,7 @@ class CustomDropdown<T> extends StatelessWidget {
             borderRadius: BorderRadius.circular(8.0),
           ),
         ),
-        initialValue: initialValue,
+        value: initialValue,
         items: items.map((T value) {
           return DropdownMenuItem<T>(
             value: value,

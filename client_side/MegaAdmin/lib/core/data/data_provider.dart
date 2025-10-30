@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:mega_admin/models/api_response.dart';
 import 'package:mega_admin/utility/snack_bar_helper.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart' hide Category;
 import 'package:get/get.dart';
 
@@ -533,9 +534,8 @@ class DataProvider extends ChangeNotifier {
                     .map((item) => Order.fromJson(item))
                     .toList());
 
-        if (kDebugMode) {
-          debugPrint(apiResponse.message);
-        }
+        print(apiResponse.message);
+
         _allOrders = apiResponse.data ?? [];
         _filteredOrders = List.from(_allOrders);
 
@@ -546,7 +546,7 @@ class DataProvider extends ChangeNotifier {
         }
       }
     } catch (e) {
-      debugPrint(e.toString());
+      print(e);
       if (showSnack) {
         SnackBarHelper.showErrorSnackBar('An error occurred: $e');
       }
@@ -618,7 +618,7 @@ class DataProvider extends ChangeNotifier {
 
     if (showSnack) {
       SnackBarHelper.showSuccessSnackBar(
-          '$_filteredProductsType retrieved successfully!');
+          '${_filteredProductsType} retrieved successfully!');
     }
 
     notifyListeners();

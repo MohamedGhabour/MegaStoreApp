@@ -28,7 +28,7 @@ class ProductSubmitForm extends StatelessWidget {
         key: context.dashBoardProvider.addProductFormKey,
         child: Container(
           width: MediaQuery.of(context).size.width * 0.7,
-          padding: const EdgeInsets.all(defaultPadding),
+          padding: EdgeInsets.all(defaultPadding),
           decoration: BoxDecoration(
             color: bgColor,
             borderRadius: BorderRadius.circular(12.0),
@@ -36,7 +36,7 @@ class ProductSubmitForm extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const SizedBox(height: defaultPadding),
+              SizedBox(height: defaultPadding),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 4.0),
                 child: Row(
@@ -53,7 +53,7 @@ class ProductSubmitForm extends StatelessWidget {
                                       ?.url ==
                                   null
                               ? product?.images.safeElementAt(0)?.url
-                              : '$MAIN_URL${product?.images.safeElementAt(0)?.url}',
+                              : '${MAIN_URL}${product?.images.safeElementAt(0)?.url}',
                           onTap: () {
                             dashProvider.pickImage(imageCardNumber: 1);
                           },
@@ -74,7 +74,7 @@ class ProductSubmitForm extends StatelessWidget {
                                       ?.url ==
                                   null
                               ? product?.images.safeElementAt(1)?.url
-                              : '$MAIN_URL${product?.images.safeElementAt(1)?.url}',
+                              : '${MAIN_URL}${product?.images.safeElementAt(1)?.url}',
                           onTap: () {
                             dashProvider.pickImage(imageCardNumber: 2);
                           },
@@ -95,7 +95,7 @@ class ProductSubmitForm extends StatelessWidget {
                                       ?.url ==
                                   null
                               ? product?.images.safeElementAt(2)?.url
-                              : '$MAIN_URL${product?.images.safeElementAt(2)?.url}',
+                              : '${MAIN_URL}${product?.images.safeElementAt(2)?.url}',
                           onTap: () {
                             dashProvider.pickImage(imageCardNumber: 3);
                           },
@@ -116,7 +116,7 @@ class ProductSubmitForm extends StatelessWidget {
                                       ?.url ==
                                   null
                               ? product?.images.safeElementAt(3)?.url
-                              : '$MAIN_URL${product?.images.safeElementAt(3)?.url}',
+                              : '${MAIN_URL}${product?.images.safeElementAt(3)?.url}',
                           onTap: () {
                             dashProvider.pickImage(imageCardNumber: 4);
                           },
@@ -137,7 +137,7 @@ class ProductSubmitForm extends StatelessWidget {
                                       ?.url ==
                                   null
                               ? product?.images.safeElementAt(4)?.url
-                              : '$MAIN_URL${product?.images.safeElementAt(4)?.url}',
+                              : '${MAIN_URL}${product?.images.safeElementAt(4)?.url}',
                           onTap: () {
                             dashProvider.pickImage(imageCardNumber: 5);
                           },
@@ -151,7 +151,7 @@ class ProductSubmitForm extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(height: defaultPadding),
+              SizedBox(height: defaultPadding),
               CustomTextField(
                 controller: context.dashBoardProvider.productNameCtrl,
                 labelText: 'Product Name',
@@ -163,21 +163,21 @@ class ProductSubmitForm extends StatelessWidget {
                   return null;
                 },
               ),
-              const SizedBox(height: defaultPadding),
+              SizedBox(height: defaultPadding),
               CustomTextField(
                 controller: context.dashBoardProvider.productDescCtrl,
                 labelText: 'Product Description',
                 lineNumber: 3,
                 onSave: (val) {},
               ),
-              const SizedBox(height: defaultPadding),
+              SizedBox(height: defaultPadding),
               Row(
                 children: [
                   Expanded(child: Consumer<DashBoardProvider>(
                     builder: (context, dashProvider, child) {
-                      List<Category> sortedCategories =
+                      List<Category> _sortedCategories =
                           List.from(context.dataProvider.categories);
-                      sortedCategories.sort((a, b) {
+                      _sortedCategories.sort((a, b) {
                         if (a.name == null && b.name == null) {
                           return 0;
                         } else if (a.name == null) {
@@ -193,7 +193,7 @@ class ProductSubmitForm extends StatelessWidget {
                         key: ValueKey(dashProvider.selectedCategory?.sId),
                         initialValue: dashProvider.selectedCategory,
                         hintText: 'Select category',
-                        items: sortedCategories,
+                        items: _sortedCategories,
                         displayItem: (Category? category) =>
                             category?.name ?? '',
                         onChanged: (newValue) {
@@ -213,9 +213,9 @@ class ProductSubmitForm extends StatelessWidget {
                   )),
                   Expanded(child: Consumer<DashBoardProvider>(
                     builder: (context, dashProvider, child) {
-                      List<SubCategory> sortedSubCategories =
+                      List<SubCategory> _sortedSubCategories =
                           List.from(dashProvider.subCategoriesByCategory);
-                      sortedSubCategories.sort((a, b) {
+                      _sortedSubCategories.sort((a, b) {
                         if (a.name == null && b.name == null) {
                           return 0;
                         } else if (a.name == null) {
@@ -230,7 +230,7 @@ class ProductSubmitForm extends StatelessWidget {
                       return CustomDropdown(
                         key: ValueKey(dashProvider.selectedSubCategory?.sId),
                         hintText: 'Select Sub Category',
-                        items: sortedSubCategories,
+                        items: _sortedSubCategories,
                         initialValue: dashProvider.selectedSubCategory,
                         displayItem: (SubCategory? subCategory) =>
                             subCategory?.name ?? '',
@@ -251,9 +251,9 @@ class ProductSubmitForm extends StatelessWidget {
                   Expanded(
                     child: Consumer<DashBoardProvider>(
                       builder: (context, dashProvider, child) {
-                        List<Brand> sortedBrands =
+                        List<Brand> _sortedBrands =
                             List.from(dashProvider.brandsBySubCategory);
-                        sortedBrands.sort((a, b) {
+                        _sortedBrands.sort((a, b) {
                           if (a.name == null && b.name == null) {
                             return 0;
                           } else if (a.name == null) {
@@ -268,7 +268,7 @@ class ProductSubmitForm extends StatelessWidget {
                         return CustomDropdown(
                             key: ValueKey(dashProvider.selectedBrand?.sId),
                             initialValue: dashProvider.selectedBrand,
-                            items: sortedBrands,
+                            items: _sortedBrands,
                             hintText: 'Select Brand',
                             displayItem: (Brand? brand) => brand?.name ?? '',
                             onChanged: (newValue) {
@@ -288,7 +288,7 @@ class ProductSubmitForm extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: defaultPadding),
+              SizedBox(height: defaultPadding),
               Row(
                 children: [
                   Expanded(
@@ -329,15 +329,15 @@ class ProductSubmitForm extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(width: defaultPadding),
+              SizedBox(width: defaultPadding),
               Row(
                 children: [
                   Expanded(
                     child: Consumer<DashBoardProvider>(
                       builder: (context, dashProvider, child) {
-                        List<VariantType> sortedVariantTypes =
+                        List<VariantType> _sortedVariantTypes =
                             List.from(context.dataProvider.variantTypes);
-                        sortedVariantTypes.sort((a, b) {
+                        _sortedVariantTypes.sort((a, b) {
                           if (a.name == null && b.name == null) {
                             return 0;
                           } else if (a.name == null) {
@@ -352,7 +352,7 @@ class ProductSubmitForm extends StatelessWidget {
                         return CustomDropdown(
                           key: ValueKey(dashProvider.selectedVariantType?.sId),
                           initialValue: dashProvider.selectedVariantType,
-                          items: sortedVariantTypes,
+                          items: _sortedVariantTypes,
                           displayItem: (VariantType? variantType) =>
                               variantType?.name ?? '',
                           onChanged: (newValue) {
@@ -388,7 +388,7 @@ class ProductSubmitForm extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: defaultPadding),
+              SizedBox(height: defaultPadding),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -400,9 +400,9 @@ class ProductSubmitForm extends StatelessWidget {
                     onPressed: () {
                       Navigator.of(context).pop(); // Close the popup
                     },
-                    child: const Text('Cancel'),
+                    child: Text('Cancel'),
                   ),
-                  const SizedBox(width: defaultPadding),
+                  SizedBox(width: defaultPadding),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       foregroundColor: Colors.white,
@@ -421,7 +421,7 @@ class ProductSubmitForm extends StatelessWidget {
                         Navigator.of(context).pop();
                       }
                     },
-                    child: const Text('Submit'),
+                    child: Text('Submit'),
                   ),
                 ],
               ),
@@ -442,7 +442,7 @@ void showAddProductForm(BuildContext context, Product? product) {
         backgroundColor: bgColor,
         title: Center(
             child: Text('Add Product'.toUpperCase(),
-                style: const TextStyle(color: primaryColor))),
+                style: TextStyle(color: primaryColor))),
         content: ProductSubmitForm(product: product),
       );
     },

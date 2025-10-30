@@ -18,7 +18,7 @@ class VariantTypeSubmitForm extends StatelessWidget {
       child: Form(
         key: context.variantTypeProvider.addVariantsTypeFormKey,
         child: Container(
-          padding: const EdgeInsets.all(defaultPadding),
+          padding: EdgeInsets.all(defaultPadding),
           width: MediaQuery.of(context).size.width * 0.5,
           decoration: BoxDecoration(
             color: bgColor,
@@ -27,7 +27,7 @@ class VariantTypeSubmitForm extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const SizedBox(height: defaultPadding),
+              SizedBox(height: defaultPadding),
               Row(
                 children: [
                   Expanded(
@@ -58,7 +58,7 @@ class VariantTypeSubmitForm extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: defaultPadding * 2),
+              SizedBox(height: defaultPadding * 2),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -70,9 +70,9 @@ class VariantTypeSubmitForm extends StatelessWidget {
                     onPressed: () {
                       Navigator.of(context).pop(); // Close the popup
                     },
-                    child: const Text('Cancel'),
+                    child: Text('Cancel'),
                   ),
-                  const SizedBox(width: defaultPadding),
+                  SizedBox(width: defaultPadding),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       foregroundColor: Colors.white,
@@ -91,7 +91,7 @@ class VariantTypeSubmitForm extends StatelessWidget {
                         Navigator.of(context).pop();
                       }
                     },
-                    child: const Text('Submit'),
+                    child: Text('Submit'),
                   ),
                 ],
               ),
@@ -112,7 +112,7 @@ void showAddVariantsTypeForm(BuildContext context, VariantType? variantType) {
         backgroundColor: bgColor,
         title: Center(
             child: Text('Add Variant Type'.toUpperCase(),
-                style: const TextStyle(color: primaryColor))),
+                style: TextStyle(color: primaryColor))),
         content: VariantTypeSubmitForm(variantType: variantType),
       );
     },

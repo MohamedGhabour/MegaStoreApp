@@ -11,16 +11,16 @@ import 'add_variant_type_form.dart';
 
 class VariantsTypeListSection extends StatelessWidget {
   const VariantsTypeListSection({
-    super.key,
-  });
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(defaultPadding),
-      decoration: const BoxDecoration(
+      padding: EdgeInsets.all(defaultPadding),
+      decoration: BoxDecoration(
         color: secondaryColor,
-        borderRadius: BorderRadius.all(Radius.circular(10)),
+        borderRadius: const BorderRadius.all(Radius.circular(10)),
       ),
       child: SizedBox(
         width: double.infinity,
@@ -29,7 +29,7 @@ class VariantsTypeListSection extends StatelessWidget {
             return DataTable(
               columnSpacing: defaultPadding,
               // minWidth: 600,
-              columns: const [
+              columns: [
                 DataColumn(
                   label: Text("Variant Name"),
                 ),
@@ -71,7 +71,7 @@ class VariantsTypeListSection extends StatelessWidget {
 }
 
 DataRow variantTypeDataRow(
-    BuildContext context, VariantType variantTypeInfo, int index,
+    BuildContext context, VariantType VariantTypeInfo, int index,
     {Function? edit, Function? delete}) {
   return DataRow(
     cells: [
@@ -89,23 +89,23 @@ DataRow variantTypeDataRow(
               child: Text(
                 index.toString(),
                 textAlign: TextAlign.center,
-                style: const TextStyle(fontSize: 12),
+                style: TextStyle(fontSize: 12),
               ),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
-              child: Text(variantTypeInfo.name ?? ''),
+              child: Text(VariantTypeInfo.name ?? ''),
             ),
           ],
         ),
       ),
-      DataCell(Text(variantTypeInfo.type ?? '')),
-      DataCell(Text(formatTimestamp(context, variantTypeInfo.createdAt))),
+      DataCell(Text(VariantTypeInfo.type ?? '')),
+      DataCell(Text(formatTimestamp(context, VariantTypeInfo.createdAt))),
       DataCell(IconButton(
           onPressed: () {
             if (edit != null) edit();
           },
-          icon: const Icon(
+          icon: Icon(
             Icons.edit,
             color: Colors.white,
           ))),
@@ -113,7 +113,7 @@ DataRow variantTypeDataRow(
           onPressed: () {
             if (delete != null) delete();
           },
-          icon: const Icon(
+          icon: Icon(
             Icons.delete,
             color: Colors.red,
           ))),
