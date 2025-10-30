@@ -7,16 +7,6 @@ const { uploadCategory } = require("../uploadFile");
 const multer = require("multer");
 const asyncHandler = require("express-async-handler");
 
-
-const fs = require("fs");
-const path = require("path");
-
-// Ensure the category upload folder exists
-const categoryDir = path.join(__dirname, "../public/category");
-if (!fs.existsSync(categoryDir)) {
-  fs.mkdirSync(categoryDir, { recursive: true });
-}
-
 // Get all categories
 router.get(
   "/",

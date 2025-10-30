@@ -5,9 +5,9 @@
 // TODO: change according to yours
 // ignore_for_file: constant_identifier_names
 
-const SERVER_URL = 'http://localhost:8080';
+const SERVER_URL = 'https://megastoreapp-production-2ba8.up.railway.app';
 const ONESIGNAL_APP_ID = 'YOUR_ONE_SIGNAL_APP_ID';
-const CURRENCY_SYMBOL = "৳";
+const CURRENCY_SYMBOL = "EGP ";
 
 // preference keys, no need to change
 const FAVORITE_PRODUCT_BOX = 'FAVORITE_PRODUCT_BOX';
