@@ -33,7 +33,7 @@ class PosterProvider extends ChangeNotifier {
 
       Map<String, dynamic> formDataMap = {
         'posterName': posterNameCtrl.text,
-        'image': 'no_data', //? image path will be added from server side
+        'image': 'no_url', //? image path will be added from server side
       };
 
       final FormData form =
@@ -70,7 +70,7 @@ class PosterProvider extends ChangeNotifier {
     try {
       Map<String, dynamic> formDataMap = {
         'posterName': posterNameCtrl.text,
-        'image': posterForUpdate?.imageUrl ?? '',
+        'image': posterForUpdate?.imageUrl?.toString() ?? 'no_url',
       };
 
       final FormData form =
