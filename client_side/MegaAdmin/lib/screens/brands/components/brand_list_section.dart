@@ -11,16 +11,16 @@ import 'add_brand_form.dart';
 
 class BrandListSection extends StatelessWidget {
   const BrandListSection({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(defaultPadding),
-      decoration: BoxDecoration(
+      padding: const EdgeInsets.all(defaultPadding),
+      decoration: const BoxDecoration(
         color: secondaryColor,
-        borderRadius: const BorderRadius.all(Radius.circular(10)),
+        borderRadius: BorderRadius.all(Radius.circular(10)),
       ),
       child: SizedBox(
         width: double.infinity,
@@ -29,7 +29,7 @@ class BrandListSection extends StatelessWidget {
             return DataTable(
               columnSpacing: defaultPadding,
               // minWidth: 600,
-              columns: [
+              columns: const [
                 DataColumn(
                   label: Text("Brands Name"),
                 ),
@@ -81,7 +81,7 @@ DataRow brandDataRow(BuildContext context, Brand brandInfo, int index,
               child: Text(
                 index.toString(),
                 textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 12),
+                style: const TextStyle(fontSize: 12),
               ),
             ),
             Padding(
@@ -97,7 +97,7 @@ DataRow brandDataRow(BuildContext context, Brand brandInfo, int index,
           onPressed: () {
             if (edit != null) edit();
           },
-          icon: Icon(
+          icon: const Icon(
             Icons.edit,
             color: Colors.white,
           ))),
@@ -105,7 +105,7 @@ DataRow brandDataRow(BuildContext context, Brand brandInfo, int index,
           onPressed: () {
             if (delete != null) delete();
           },
-          icon: Icon(
+          icon: const Icon(
             Icons.delete,
             color: Colors.red,
           ))),

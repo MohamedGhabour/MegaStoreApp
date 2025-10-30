@@ -1,5 +1,3 @@
-// ignore_for_file: constant_identifier_names
-
 import 'package:flutter/material.dart';
 
 const primaryColor = Color(0xFF2697FF);
@@ -8,7 +6,7 @@ const bgColor = Color(0xFF212332);
 const defaultPadding = 16.0;
 
 // TODO: change according to yours
-const MAIN_URL = 'https://megastoreapp-production-2ba8.up.railway.app';
+const MAIN_URL = 'http://localhost:8080';
 const currency_symbol = "৳";
 
 // product summary info

@@ -13,42 +13,42 @@ import '../../variants/variants_screen.dart';
 import '../../variants_type/variants_type_screen.dart';
 
 class MainScreenProvider extends ChangeNotifier {
-  Widget selectedScreen = DashboardScreen();
+  Widget selectedScreen = const DashboardScreen();
 
   navigateToScreen(String screenName) {
     switch (screenName) {
       case 'Dashboard':
-        selectedScreen = DashboardScreen();
+        selectedScreen = const DashboardScreen();
         break;
       case 'Category':
-        selectedScreen = CategoryScreen();
+        selectedScreen = const CategoryScreen();
         break;
       case 'SubCategory':
-        selectedScreen = SubCategoryScreen();
+        selectedScreen = const SubCategoryScreen();
         break;
       case 'Brands':
-        selectedScreen = BrandScreen();
+        selectedScreen = const BrandScreen();
         break;
       case 'VariantType':
-        selectedScreen = VariantsTypeScreen();
+        selectedScreen = const VariantsTypeScreen();
         break;
       case 'Variants':
-        selectedScreen = VariantsScreen();
+        selectedScreen = const VariantsScreen();
         break;
       case 'Coupon':
-        selectedScreen = CouponCodeScreen();
+        selectedScreen = const CouponCodeScreen();
         break;
       case 'Poster':
-        selectedScreen = PosterScreen();
+        selectedScreen = const PosterScreen();
         break;
       case 'Order':
-        selectedScreen = OrderScreen();
+        selectedScreen = const OrderScreen();
         break;
       case 'Notifications':
-        selectedScreen = NotificationScreen();
+        selectedScreen = const NotificationScreen();
         break;
       default:
-        selectedScreen = DashboardScreen();
+        selectedScreen = const DashboardScreen();
     }
     notifyListeners();
   }

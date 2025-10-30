@@ -23,7 +23,7 @@ class SubCategorySubmitForm extends StatelessWidget {
       child: Form(
         key: context.subCategoryProvider.addSubCategoryFormKey,
         child: Container(
-          padding: EdgeInsets.all(defaultPadding),
+          padding: const EdgeInsets.all(defaultPadding),
           width: MediaQuery.of(context).size.width * 0.5,
           decoration: BoxDecoration(
             color: bgColor,
@@ -32,15 +32,15 @@ class SubCategorySubmitForm extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Gap(defaultPadding),
+              const Gap(defaultPadding),
               Row(
                 children: [
                   Expanded(
                     child: Consumer<SubCategoryProvider>(
                       builder: (context, subCatProvider, child) {
-                        List<Category> _sortedCategories =
+                        List<Category> sortedCategories =
                             List.from(context.dataProvider.categories);
-                        _sortedCategories.sort((a, b) {
+                        sortedCategories.sort((a, b) {
                           if (a.name == null && b.name == null) {
                             return 0;
                           } else if (a.name == null) {
@@ -55,7 +55,7 @@ class SubCategorySubmitForm extends StatelessWidget {
                         return CustomDropdown(
                           initialValue: subCatProvider.selectedCategory,
                           hintText: 'Select Category',
-                          items: _sortedCategories,
+                          items: sortedCategories,
                           displayItem: (Category? category) =>
                               category?.name ?? '',
                           onChanged: (newValue) {
@@ -90,7 +90,7 @@ class SubCategorySubmitForm extends StatelessWidget {
                   ),
                 ],
               ),
-              Gap(defaultPadding * 2),
+              const Gap(defaultPadding * 2),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -102,9 +102,9 @@ class SubCategorySubmitForm extends StatelessWidget {
                     onPressed: () {
                       Navigator.of(context).pop(); // Close the popup
                     },
-                    child: Text('Cancel'),
+                    child: const Text('Cancel'),
                   ),
-                  Gap(defaultPadding),
+                  const Gap(defaultPadding),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       foregroundColor: Colors.white,
@@ -123,7 +123,7 @@ class SubCategorySubmitForm extends StatelessWidget {
                         Navigator.of(context).pop();
                       }
                     },
-                    child: Text('Submit'),
+                    child: const Text('Submit'),
                   ),
                 ],
               ),
@@ -144,7 +144,7 @@ void showAddSubCategoryForm(BuildContext context, SubCategory? subCategory) {
         backgroundColor: bgColor,
         title: Center(
             child: Text('Add Sub Category'.toUpperCase(),
-                style: TextStyle(color: primaryColor))),
+                style: const TextStyle(color: primaryColor))),
         content: SubCategorySubmitForm(subCategory: subCategory),
       );
     },

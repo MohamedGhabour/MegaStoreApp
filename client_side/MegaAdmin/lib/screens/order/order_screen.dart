@@ -8,16 +8,18 @@ import 'components/order_header.dart';
 import 'components/order_list_section.dart';
 
 class OrderScreen extends StatelessWidget {
+  const OrderScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: SingleChildScrollView(
         primary: false,
-        padding: EdgeInsets.all(defaultPadding),
+        padding: const EdgeInsets.all(defaultPadding),
         child: Column(
           children: [
-            OrderHeader(),
-            SizedBox(height: defaultPadding),
+            const OrderHeader(),
+            const SizedBox(height: defaultPadding),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -34,13 +36,13 @@ class OrderScreen extends StatelessWidget {
                               style: Theme.of(context).textTheme.titleMedium,
                             ),
                           ),
-                          Gap(20),
+                          const Gap(20),
                           SizedBox(
                             width: 280,
                             child: CustomDropdown(
                               hintText: 'Filter Order By status',
                               initialValue: ORDER_STATUS_ALL,
-                              items: [
+                              items: const [
                                 ORDER_STATUS_ALL,
                                 ORDER_STATUS_PENDING,
                                 ORDER_STATUS_PROCESSING,
@@ -64,17 +66,17 @@ class OrderScreen extends StatelessWidget {
                               },
                             ),
                           ),
-                          Gap(40),
+                          const Gap(40),
                           IconButton(
                               onPressed: () {
                                 context.dataProvider
                                     .getAllOrders(showSnack: true);
                               },
-                              icon: Icon(Icons.refresh)),
+                              icon: const Icon(Icons.refresh)),
                         ],
                       ),
-                      Gap(defaultPadding),
-                      OrderListSection(),
+                      const Gap(defaultPadding),
+                      const OrderListSection(),
                     ],
                   ),
                 ),

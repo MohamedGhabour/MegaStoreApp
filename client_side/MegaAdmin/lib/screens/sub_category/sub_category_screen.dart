@@ -8,16 +8,18 @@ import 'components/sub_category_header.dart';
 import 'components/sub_category_list_section.dart';
 
 class SubCategoryScreen extends StatelessWidget {
+  const SubCategoryScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: SingleChildScrollView(
         primary: false,
-        padding: EdgeInsets.all(defaultPadding),
+        padding: const EdgeInsets.all(defaultPadding),
         child: Column(
           children: [
-            SubCategoryHeader(),
-            Gap(defaultPadding),
+            const SubCategoryHeader(),
+            const Gap(defaultPadding),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -36,7 +38,7 @@ class SubCategoryScreen extends StatelessWidget {
                           ),
                           ElevatedButton.icon(
                             style: TextButton.styleFrom(
-                              padding: EdgeInsets.symmetric(
+                              padding: const EdgeInsets.symmetric(
                                 horizontal: defaultPadding * 1.5,
                                 vertical: defaultPadding,
                               ),
@@ -44,20 +46,20 @@ class SubCategoryScreen extends StatelessWidget {
                             onPressed: () {
                               showAddSubCategoryForm(context, null);
                             },
-                            icon: Icon(Icons.add),
-                            label: Text("Add Sub Category"),
+                            icon: const Icon(Icons.add),
+                            label: const Text("Add Sub Category"),
                           ),
-                          Gap(20),
+                          const Gap(20),
                           IconButton(
                               onPressed: () {
                                 context.dataProvider
                                     .getAllSubCategories(showSnack: true);
                               },
-                              icon: Icon(Icons.refresh)),
+                              icon: const Icon(Icons.refresh)),
                         ],
                       ),
-                      Gap(defaultPadding),
-                      SubCategoryListSection(),
+                      const Gap(defaultPadding),
+                      const SubCategoryListSection(),
                     ],
                   ),
                 ),

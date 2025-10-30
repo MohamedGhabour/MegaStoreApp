@@ -8,16 +8,18 @@ import 'components/brand_header.dart';
 import 'components/brand_list_section.dart';
 
 class BrandScreen extends StatelessWidget {
+  const BrandScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: SingleChildScrollView(
         primary: false,
-        padding: EdgeInsets.all(defaultPadding),
+        padding: const EdgeInsets.all(defaultPadding),
         child: Column(
           children: [
-            BrandHeader(),
-            Gap(defaultPadding),
+            const BrandHeader(),
+            const Gap(defaultPadding),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -36,7 +38,7 @@ class BrandScreen extends StatelessWidget {
                           ),
                           ElevatedButton.icon(
                             style: TextButton.styleFrom(
-                              padding: EdgeInsets.symmetric(
+                              padding: const EdgeInsets.symmetric(
                                 horizontal: defaultPadding * 1.5,
                                 vertical: defaultPadding,
                               ),
@@ -44,20 +46,20 @@ class BrandScreen extends StatelessWidget {
                             onPressed: () {
                               showBrandForm(context, null);
                             },
-                            icon: Icon(Icons.add),
-                            label: Text("Add Brand"),
+                            icon: const Icon(Icons.add),
+                            label: const Text("Add Brand"),
                           ),
-                          Gap(20),
+                          const Gap(20),
                           IconButton(
                               onPressed: () {
                                 context.dataProvider
                                     .getAllBrands(showSnack: true);
                               },
-                              icon: Icon(Icons.refresh)),
+                              icon: const Icon(Icons.refresh)),
                         ],
                       ),
-                      Gap(defaultPadding),
-                      BrandListSection(),
+                      const Gap(defaultPadding),
+                      const BrandListSection(),
                     ],
                   ),
                 ),

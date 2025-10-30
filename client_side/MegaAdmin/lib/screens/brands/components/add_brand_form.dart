@@ -23,7 +23,7 @@ class BrandSubmitForm extends StatelessWidget {
       child: Form(
         key: context.brandProvider.addBrandFormKey,
         child: Container(
-          padding: EdgeInsets.all(defaultPadding),
+          padding: const EdgeInsets.all(defaultPadding),
           width: MediaQuery.of(context).size.width * 0.5,
           decoration: BoxDecoration(
             color: bgColor,
@@ -32,15 +32,15 @@ class BrandSubmitForm extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Gap(defaultPadding),
+              const Gap(defaultPadding),
               Row(
                 children: [
                   Expanded(
                     child: Consumer<BrandProvider>(
                       builder: (context, brandProvider, child) {
-                        List<SubCategory> _sortedSubCategories =
+                        List<SubCategory> sortedSubCategories =
                             List.from(context.dataProvider.subCategories);
-                        _sortedSubCategories.sort((a, b) {
+                        sortedSubCategories.sort((a, b) {
                           if (a.name == null && b.name == null) {
                             return 0;
                           } else if (a.name == null) {
@@ -54,7 +54,7 @@ class BrandSubmitForm extends StatelessWidget {
 
                         return CustomDropdown(
                           initialValue: brandProvider.selectedSubCategory,
-                          items: _sortedSubCategories,
+                          items: sortedSubCategories,
                           hintText: 'Select Sub Category',
                           displayItem: (SubCategory? subCategory) =>
                               subCategory?.name ?? '',
@@ -87,7 +87,7 @@ class BrandSubmitForm extends StatelessWidget {
                   ),
                 ],
               ),
-              Gap(defaultPadding * 2),
+              const Gap(defaultPadding * 2),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -99,9 +99,9 @@ class BrandSubmitForm extends StatelessWidget {
                     onPressed: () {
                       Navigator.of(context).pop(); // Close the popup
                     },
-                    child: Text('Cancel'),
+                    child: const Text('Cancel'),
                   ),
-                  SizedBox(width: defaultPadding),
+                  const SizedBox(width: defaultPadding),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       foregroundColor: Colors.white,
@@ -118,7 +118,7 @@ class BrandSubmitForm extends StatelessWidget {
                         Navigator.of(context).pop();
                       }
                     },
-                    child: Text('Submit'),
+                    child: const Text('Submit'),
                   ),
                 ],
               ),
@@ -139,7 +139,7 @@ void showBrandForm(BuildContext context, Brand? brand) {
         backgroundColor: bgColor,
         title: Center(
             child: Text('Add Brand'.toUpperCase(),
-                style: TextStyle(color: primaryColor))),
+                style: const TextStyle(color: primaryColor))),
         content: BrandSubmitForm(
           brand: brand,
         ),

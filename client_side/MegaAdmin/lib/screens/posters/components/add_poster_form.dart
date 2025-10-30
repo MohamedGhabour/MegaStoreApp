@@ -22,7 +22,7 @@ class PosterSubmitForm extends StatelessWidget {
       child: Form(
         key: context.posterProvider.addPosterFormKey,
         child: Container(
-          padding: EdgeInsets.all(defaultPadding),
+          padding: const EdgeInsets.all(defaultPadding),
           width: MediaQuery.of(context).size.width * 0.3,
           decoration: BoxDecoration(
             color: bgColor,
@@ -31,7 +31,7 @@ class PosterSubmitForm extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Gap(defaultPadding),
+              const Gap(defaultPadding),
               Consumer<PosterProvider>(
                 builder: (context, posterProvider, child) {
                   return CategoryImageCard(
@@ -39,14 +39,14 @@ class PosterSubmitForm extends StatelessWidget {
                     imageFile: posterProvider.selectedImage,
                     imageUrlForUpdateImage: poster?.imageUrl == null
                         ? poster?.imageUrl
-                        : '${MAIN_URL}${poster?.imageUrl}',
+                        : '$MAIN_URL${poster?.imageUrl}',
                     onTap: () {
                       posterProvider.pickImage();
                     },
                   );
                 },
               ),
-              Gap(defaultPadding),
+              const Gap(defaultPadding),
               CustomTextField(
                 controller: context.posterProvider.posterNameCtrl,
                 labelText: 'Poster Name',
@@ -58,7 +58,7 @@ class PosterSubmitForm extends StatelessWidget {
                   return null;
                 },
               ),
-              Gap(defaultPadding * 2),
+              const Gap(defaultPadding * 2),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -70,9 +70,9 @@ class PosterSubmitForm extends StatelessWidget {
                     onPressed: () {
                       Navigator.of(context).pop(); // Close the popup
                     },
-                    child: Text('Cancel'),
+                    child: const Text('Cancel'),
                   ),
-                  Gap(defaultPadding),
+                  const Gap(defaultPadding),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       foregroundColor: Colors.white,
@@ -89,7 +89,7 @@ class PosterSubmitForm extends StatelessWidget {
                         Navigator.of(context).pop();
                       }
                     },
-                    child: Text('Submit'),
+                    child: const Text('Submit'),
                   ),
                 ],
               ),
@@ -110,7 +110,7 @@ void showAddPosterForm(BuildContext context, Poster? poster) {
         backgroundColor: bgColor,
         title: Center(
             child: Text('Add Poster'.toUpperCase(),
-                style: TextStyle(color: primaryColor))),
+                style: const TextStyle(color: primaryColor))),
         content: PosterSubmitForm(poster: poster),
       );
     },

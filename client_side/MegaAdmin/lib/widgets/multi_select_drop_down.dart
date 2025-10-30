@@ -10,12 +10,12 @@ class MultiSelectDropDown<T> extends StatelessWidget {
   final List<T> selectedItems;
 
   const MultiSelectDropDown({
-    Key? key,
+    super.key,
     required this.items,
     required this.onSelectionChanged,
     required this.displayItem,
     required this.selectedItems,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -94,7 +94,7 @@ class MultiSelectDropDown<T> extends StatelessWidget {
               ).toList();
             },
             buttonStyleData: ButtonStyleData(
-              padding: EdgeInsets.only(left: 16, right: 8),
+              padding: const EdgeInsets.only(left: 16, right: 8),
               height: 50,
               decoration: BoxDecoration(
                 color: secondaryColor,

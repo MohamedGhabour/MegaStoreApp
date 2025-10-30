@@ -8,8 +8,8 @@ import '../../../utility/constants.dart';
 
 class Chart extends StatelessWidget {
   const Chart({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +29,7 @@ class Chart extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SizedBox(height: defaultPadding),
+                const SizedBox(height: defaultPadding),
                 Consumer<DataProvider>(
                   builder: (context, dataProvider, child) {
                     return Text(
@@ -43,8 +43,8 @@ class Chart extends StatelessWidget {
                     );
                   },
                 ),
-                SizedBox(height: defaultPadding),
-                Text("Order")
+                const SizedBox(height: defaultPadding),
+                const Text("Order")
               ],
             ),
           ),
@@ -70,25 +70,25 @@ class Chart extends StatelessWidget {
 
     List<PieChartSectionData> pieChartSelectionData = [
       PieChartSectionData(
-        color: Color(0xFFFFCF26),
+        color: const Color(0xFFFFCF26),
         value: pendingOrder.toDouble(),
         showTitle: false,
         radius: 20,
       ),
       PieChartSectionData(
-        color: Color(0xFFEE2727),
+        color: const Color(0xFFEE2727),
         value: cancelledOrder.toDouble(),
         showTitle: false,
         radius: 20,
       ),
       PieChartSectionData(
-        color: Color(0xFF2697FF),
+        color: const Color(0xFF2697FF),
         value: shippedOrder.toDouble(),
         showTitle: false,
         radius: 20,
       ),
       PieChartSectionData(
-        color: Color(0xFF26FF31),
+        color: const Color(0xFF26FF31),
         value: deliveredOrder.toDouble(),
         showTitle: false,
         radius: 20,

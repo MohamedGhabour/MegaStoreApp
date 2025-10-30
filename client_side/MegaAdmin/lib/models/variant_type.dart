@@ -22,12 +22,12 @@ class VariantType {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['name'] = this.name;
-    data['type'] = this.type;
-    data['_id'] = this.sId;
-    data['createdAt'] = this.createdAt;
-    data['updatedAt'] = this.updatedAt;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['name'] = name;
+    data['type'] = type;
+    data['_id'] = sId;
+    data['createdAt'] = createdAt;
+    data['updatedAt'] = updatedAt;
     return data;
   }
 }

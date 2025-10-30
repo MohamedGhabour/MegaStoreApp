@@ -618,7 +618,7 @@ class DataProvider extends ChangeNotifier {
 
     if (showSnack) {
       SnackBarHelper.showSuccessSnackBar(
-          '${_filteredProductsType} retrieved successfully!');
+          '$_filteredProductsType retrieved successfully!');
     }
 
     notifyListeners();

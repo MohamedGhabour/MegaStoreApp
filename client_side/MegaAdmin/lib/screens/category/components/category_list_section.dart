@@ -10,16 +10,16 @@ import 'add_category_form.dart';
 
 class CategoryListSection extends StatelessWidget {
   const CategoryListSection({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(defaultPadding),
-      decoration: BoxDecoration(
+      padding: const EdgeInsets.all(defaultPadding),
+      decoration: const BoxDecoration(
         color: secondaryColor,
-        borderRadius: const BorderRadius.all(Radius.circular(10)),
+        borderRadius: BorderRadius.all(Radius.circular(10)),
       ),
       child: SizedBox(
         width: double.infinity,
@@ -28,7 +28,7 @@ class CategoryListSection extends StatelessWidget {
             return DataTable(
               columnSpacing: defaultPadding,
               // minWidth: 600,
-              columns: [
+              columns: const [
                 DataColumn(
                   label: Text("Category Name"),
                 ),
@@ -69,12 +69,12 @@ DataRow categoryDataRow(BuildContext context, Category CatInfo,
         Row(
           children: [
             Image.network(
-              '${MAIN_URL}${CatInfo.image}',
+              '$MAIN_URL${CatInfo.image}',
               height: 30,
               width: 30,
               errorBuilder: (BuildContext context, Object exception,
                   StackTrace? stackTrace) {
-                return Icon(Icons.error);
+                return const Icon(Icons.error);
               },
               color: Colors.white,
               colorBlendMode: BlendMode.srcIn,
@@ -91,7 +91,7 @@ DataRow categoryDataRow(BuildContext context, Category CatInfo,
           onPressed: () {
             if (edit != null) edit();
           },
-          icon: Icon(
+          icon: const Icon(
             Icons.edit,
             color: Colors.white,
           ))),
@@ -99,7 +99,7 @@ DataRow categoryDataRow(BuildContext context, Category CatInfo,
           onPressed: () {
             if (delete != null) delete();
           },
-          icon: Icon(
+          icon: const Icon(
             Icons.delete,
             color: Colors.red,
           ))),
