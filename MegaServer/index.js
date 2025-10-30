@@ -4,11 +4,21 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const asyncHandler = require("express-async-handler");
 const dotenv = require("dotenv");
+const admin = require("firebase-admin");
+const path = require("path");
+
 dotenv.config();
 
 const app = express();
 
-// Middle wair
+// Firebase Admin SDK
+const serviceAccount = require(path.join(__dirname, "megastoreadmin-firebase-adminsdk-fbsvc-a89582e5bf.json"));
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+});
+
+// Middleware
 app.use(cors({ origin: "*" }));
 app.use(bodyParser.json());
 
@@ -36,10 +46,10 @@ app.use("/posters", require("./routes/poster"));
 app.use("/users", require("./routes/user"));
 app.use("/orders", require("./routes/order"));
 app.use("/payment", require("./routes/payment"));
-app.use("/notification", require("./routes/notification"));
+app.use("/notification", require("./routes/notification")); // لاحقًا سيتم استخدام admin.messaging() هنا
 app.use("/admin", require("./routes/admin"));
 
-// Example route using asyncHandler directly in app.js
+// Example route using asyncHandler directly
 app.get(
   "/",
   asyncHandler(async (req, res) => {
@@ -61,4 +71,3 @@ const PORT = process.env.PORT || 5000;
 app.listen(PORT, "0.0.0.0", () => {
   console.log(`✅ Server running on port ${PORT}`);
 });
-

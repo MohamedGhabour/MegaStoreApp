@@ -2,77 +2,66 @@ const express = require("express");
 const router = express.Router();
 const asyncHandler = require("express-async-handler");
 const Notification = require("../model/notification");
-const OneSignal = require("onesignal-node");
+const admin = require("firebase-admin");
 const dotenv = require("dotenv");
 dotenv.config();
-
-// Create OneSignal client
-const client = new OneSignal.Client(
-  process.env.ONE_SIGNAL_APP_ID,
-  process.env.ONE_SIGNAL_REST_API_KEY
-);
 
 // Send notification
 router.post(
   "/send-notification",
   asyncHandler(async (req, res) => {
-    const { title, description, imageUrl } = req.body;
+    const { title, description, imageUrl, tokens } = req.body;
 
-    const notificationBody = {
-      contents: {
-        en: description,
-      },
-      headings: {
-        en: title,
-      },
-      included_segments: ["All"],
-      ...(imageUrl && { big_picture: imageUrl }),
-    };
-
-    const response = await client.createNotification(notificationBody);
-    let notificationId = null;
-    if (response && response.body && response.body.id) {
-      notificationId = response.body.id;
-      console.log("Notification sent to all users:", notificationId);
-    } else {
-      console.log("Notification sent, but no ID returned.");
+    if (!tokens || tokens.length === 0) {
+      return res.status(400).json({
+        success: false,
+        message: "No device tokens provided",
+      });
     }
 
-    const notification = new Notification({
-      notificationId,
-      title,
-      description,
-      imageUrl,
-    });
-
-    await notification.save();
-
-    res.json({
-      success: true,
-      message: "Notification sent successfully",
-      data: null,
-    });
-  })
-);
-
-// Track notification status
-router.get(
-  "/track-notification/:id",
-  asyncHandler(async (req, res) => {
-    const notificationId = req.params.id;
-
-    const response = await client.viewNotification(notificationId);
-    const androidStats = response.body.platform_delivery_stats;
-
-    const result = {
-      platform: "Android",
-      success_delivery: androidStats.android.successful,
-      failed_delivery: androidStats.android.failed,
-      errored_delivery: androidStats.android.errored,
-      opened_notification: androidStats.android.converted,
+    const message = {
+      notification: {
+        title,
+        body: description,
+      },
+      android: {
+        notification: {
+          imageUrl: imageUrl || undefined,
+        },
+      },
+      tokens, // array of FCM device tokens
     };
-    console.log("Notification details:", androidStats);
-    res.json({ success: true, message: "success", data: result });
+
+    try {
+      const response = await admin.messaging().sendMulticast(message);
+
+      // Log notification in DB
+      const notification = new Notification({
+        notificationId: response.responses.map((r, i) => r.messageId || "").join(","),
+        title,
+        description,
+        imageUrl,
+      });
+
+      await notification.save();
+
+      res.json({
+        success: true,
+        message: "Notification sent successfully",
+        data: {
+          successCount: response.successCount,
+          failureCount: response.failureCount,
+          responses: response.responses,
+        },
+      });
+    } catch (error) {
+      console.error("Error sending notification:", error);
+      res.status(500).json({
+        success: false,
+        message: "Failed to send notification",
+        error,
+      });
+    }
   })
 );
 
