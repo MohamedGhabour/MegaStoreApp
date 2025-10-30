@@ -22,9 +22,11 @@ try {
 }
 
 // Middleware
-// Middleware
 app.use(cors({
-  origin: "*",
+  origin: [
+    "https://megastoreadmin.web.app",
+    "https://megastoreadmin.firebaseapp.com"
+  ],
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
 }));
