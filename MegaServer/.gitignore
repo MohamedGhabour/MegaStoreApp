@@ -112,3 +112,8 @@ dist
 .vscode-test
 
 .pnp.*
+
+
+# Firebase service account JSON
+MegaServer/megastoreadmin-firebase-adminsdk-fbsvc-a89582e5bf.json
+
