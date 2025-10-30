@@ -12,25 +12,15 @@ import 'components/cart_list_section.dart';
 import 'components/empty_cart.dart';
 import 'provider/cart_provider.dart';
 
-class CartScreen extends StatefulWidget {
+class CartScreen extends StatelessWidget {
   const CartScreen({super.key});
 
   @override
-  State<CartScreen> createState() => _CartScreenState();
-}
-
-class _CartScreenState extends State<CartScreen> {
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (!mounted) return;
+  Widget build(BuildContext context) {
+    Future.delayed(Duration.zero, () {
       context.cartProvider.getCartItems();
     });
-  }
 
-  @override
-  Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size(
@@ -53,7 +43,7 @@ class _CartScreenState extends State<CartScreen> {
                     fontWeight: FontWeight.bold,
                     color: AppColor.darkAccent),
               ),
-              backgroundColor: Colors.black.withAlpha(0),
+              backgroundColor: Colors.black.withOpacity(0),
             ),
           ),
         ),
@@ -65,7 +55,12 @@ class _CartScreenState extends State<CartScreen> {
             children: [
               cartProvider.myCartItems.isEmpty
                   ? const EmptyCart()
-                  : CartListSection(cartProducts: cartProvider.myCartItems),
+                  : Consumer<CartProvider>(
+                      builder: (context, cartProvider, child) {
+                        return CartListSection(
+                            cartProducts: cartProvider.myCartItems);
+                      },
+                    ),
               //? total price section
               ClipRRect(
                 borderRadius: const BorderRadius.only(
@@ -93,6 +88,7 @@ class _CartScreenState extends State<CartScreen> {
                               child: Text(
                                 formatCurrency(
                                     context, cartProvider.getCartSubTotal()),
+                                // key: ValueKey<double>(cartProvider.getCartSubTotal()),
                                 style: const TextStyle(
                                   fontSize: 22,
                                   fontWeight: FontWeight.w800,
@@ -109,11 +105,11 @@ class _CartScreenState extends State<CartScreen> {
                             padding: const EdgeInsets.only(top: 20),
                             child: ElevatedButton(
                               onPressed:
-                              cartProvider.myCartItems.isEmpty
-                                  ? null
-                                  : () {
-                                showCustomBottomSheet(context);
-                              },
+                                  context.cartProvider.myCartItems.isEmpty
+                                      ? null
+                                      : () {
+                                          showCustomBottomSheet(context);
+                                        },
                               child: const Padding(
                                 padding: EdgeInsets.all(6.0),
                                 child: Text(

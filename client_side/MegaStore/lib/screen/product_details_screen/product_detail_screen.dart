@@ -37,7 +37,7 @@ class ProductDetailScreen extends StatelessWidget {
                 color: Colors.black,
               ),
               elevation: 0.0,
-              backgroundColor: Colors.black.withAlpha(0),
+              backgroundColor: Colors.black.withOpacity(0),
             ),
           ),
         ),

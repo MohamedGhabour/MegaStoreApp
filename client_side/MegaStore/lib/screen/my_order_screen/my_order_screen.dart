@@ -42,7 +42,7 @@ class MyOrderScreen extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                     color: AppColor.darkAccent),
               ),
-              backgroundColor: Colors.black.withAlpha(0),
+              backgroundColor: Colors.black.withOpacity(0),
             ),
           ),
         ),

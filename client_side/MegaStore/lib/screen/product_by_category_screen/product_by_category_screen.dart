@@ -13,30 +13,18 @@ import '../../widget/multi_select_drop_down.dart';
 import '../../widget/product_grid_view.dart';
 import 'provider/product_by_category_provider.dart';
 
-class ProductByCategoryScreen extends StatefulWidget {
+class ProductByCategoryScreen extends StatelessWidget {
   final Category selectedCategory;
 
   const ProductByCategoryScreen({super.key, required this.selectedCategory});
 
   @override
-  State<ProductByCategoryScreen> createState() =>
-      _ProductByCategoryScreenState();
-}
-
-class _ProductByCategoryScreenState extends State<ProductByCategoryScreen> {
-  @override
-  void initState() {
-    super.initState();
-    // استدعاء الدالة بعد أول frame لضمان أمان الـ context
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (!mounted) return;
-      context.productByCategoryProvider
-          .filterInitialProductAndSubCategory(widget.selectedCategory);
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
+    Future.delayed(Duration.zero, () {
+      context.productByCategoryProvider
+          .filterInitialProductAndSubCategory(selectedCategory);
+    });
+
     return Scaffold(
       body: CustomScrollView(
         clipBehavior: Clip.none,
@@ -47,7 +35,7 @@ class _ProductByCategoryScreenState extends State<ProductByCategoryScreen> {
             floating: true,
             snap: true,
             title: Text(
-              "${widget.selectedCategory.name}",
+              "${selectedCategory.name}",
               style: const TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
@@ -74,9 +62,9 @@ class _ProductByCategoryScreenState extends State<ProductByCategoryScreen> {
                                 child: HorizontalList(
                                   items: proByCatProvider.subCategories,
                                   itemToString: (SubCategory? val) =>
-                                  val?.name ?? '',
+                                      val?.name ?? '',
                                   selected:
-                                  proByCatProvider.mySelectedSubCategory,
+                                      proByCatProvider.mySelectedSubCategory,
                                   onSelect: (val) {
                                     if (val != null) {
                                       context.productByCategoryProvider
@@ -89,7 +77,7 @@ class _ProductByCategoryScreenState extends State<ProductByCategoryScreen> {
                           ),
                           Padding(
                             padding:
-                            const EdgeInsets.symmetric(horizontal: 16),
+                                const EdgeInsets.symmetric(horizontal: 16),
                             child: Row(
                               children: [
                                 Expanded(
@@ -128,7 +116,7 @@ class _ProductByCategoryScreenState extends State<ProductByCategoryScreen> {
                                         },
                                         displayItem: (val) => val.name ?? '',
                                         selectedItems:
-                                        proByCatProvider.selectedBrands,
+                                            proByCatProvider.selectedBrands,
                                       );
                                     },
                                   ),

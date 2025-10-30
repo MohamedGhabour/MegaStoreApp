@@ -1,5 +1,3 @@
-// ignore_for_file: unused_field
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_cart/flutter_cart.dart';
 import 'package:mega_shop/utility/snack_bar_helper.dart';
