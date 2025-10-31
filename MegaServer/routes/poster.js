@@ -56,10 +56,10 @@ router.post(
             err.message = "File size is too large. Maximum filesize is 5MB.";
           }
           console.log(`Add poster: ${err}`);
-          return res.json({ success: false, message: err });
+          return res.json({ success: false, message: err.message });
         } else if (err) {
           console.log(`Add poster: ${err}`);
-          return res.json({ success: false, message: err });
+          return res.json({ success: false, message: err.message });
         }
         const { posterName } = req.body;
         let imageUrl = "no_url";
