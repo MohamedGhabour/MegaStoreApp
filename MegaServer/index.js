@@ -33,11 +33,6 @@ app.use(cors({
 app.use(bodyParser.json());
 
 
-// Static folders
-app.use("/image/products", express.static("public/products"));
-app.use("/image/category", express.static("public/category"));
-app.use("/image/posters", express.static("public/posters"));
-
 // Connect to MongoDB safely
 const URL = process.env.MONGO_URL;
 mongoose.connect(URL)

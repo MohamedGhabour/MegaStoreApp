@@ -4,18 +4,7 @@ const Category = require("../model/category");
 const SubCategory = require("../model/subCategory");
 const Product = require("../model/product");
 const { uploadCategory } = require("../uploadFile");
-const multer = require("multer");
 const asyncHandler = require("express-async-handler");
-
-
-const fs = require("fs");
-const path = require("path");
-
-// Ensure the category upload folder exists
-const categoryDir = path.join(__dirname, "../public/category");
-if (!fs.existsSync(categoryDir)) {
-  fs.mkdirSync(categoryDir, { recursive: true });
-}
 
 // Get all categories
 router.get(
@@ -60,48 +49,36 @@ router.get(
 // Create a new category with image upload
 router.post(
   "/",
+  uploadCategory.single("img"),
   asyncHandler(async (req, res) => {
     try {
-      uploadCategory.single("img")(req, res, async function (err) {
-        if (err instanceof multer.MulterError) {
-          if (err.code === "LIMIT_FILE_SIZE") {
-            err.message = "File size is too large. Maximum filesize is 5MB.";
-          }
-          console.log(`Add category: ${err}`);
-          return res.json({ success: false, message: err });
-        } else if (err) {
-          console.log(`Add category: ${err}`);
-          return res.json({ success: false, message: err });
-        }
-        const { name } = req.body;
-        let imageUrl = "no_url";
-        if (req.file) {
-          imageUrl = `/image/category/${req.file.filename}`;
-        }
-        console.log("url ", req.file);
+      const { name } = req.body;
+      let imageUrl = "no_url";
+      if (req.file) {
+        imageUrl = req.file.path;
+      }
 
-        if (!name) {
-          return res
-            .status(400)
-            .json({ success: false, message: "Name is required." });
-        }
+      if (!name) {
+        return res
+          .status(400)
+          .json({ success: false, message: "Name is required." });
+      }
 
-        try {
-          const newCategory = new Category({
-            name: name,
-            image: imageUrl,
-          });
-          await newCategory.save();
-          res.json({
-            success: true,
-            message: "Category created successfully.",
-            data: null,
-          });
-        } catch (error) {
-          console.error("Error creating category:", error);
-          res.status(500).json({ success: false, message: error.message });
-        }
-      });
+      try {
+        const newCategory = new Category({
+          name: name,
+          image: imageUrl,
+        });
+        await newCategory.save();
+        res.json({
+          success: true,
+          message: "Category created successfully.",
+          data: null,
+        });
+      } catch (error) {
+        console.error("Error creating category:", error);
+        res.status(500).json({ success: false, message: error.message });
+      }
     } catch (err) {
       console.log(`Error creating category: ${err.message}`);
       return res.status(500).json({ success: false, message: err.message });
@@ -112,54 +89,42 @@ router.post(
 // Update a category
 router.put(
   "/:id",
+  uploadCategory.single("img"),
   asyncHandler(async (req, res) => {
     try {
       const categoryID = req.params.id;
-      uploadCategory.single("img")(req, res, async function (err) {
-        if (err instanceof multer.MulterError) {
-          if (err.code === "LIMIT_FILE_SIZE") {
-            err.message = "File size is too large. Maximum filesize is 5MB.";
-          }
-          console.log(`Update category: ${err.message}`);
-          return res.json({ success: false, message: err.message });
-        } else if (err) {
-          console.log(`Update category: ${err.message}`);
-          return res.json({ success: false, message: err.message });
-        }
+      const { name } = req.body;
+      let image = req.body.image;
 
-        const { name } = req.body;
-        let image = req.body.image;
+      if (req.file) {
+        image = req.file.path;
+      }
 
-        if (req.file) {
-          image = `/image/category/${req.file.filename}`;
-        }
+      if (!name || !image) {
+        return res
+          .status(400)
+          .json({ success: false, message: "Name and image are required." });
+      }
 
-        if (!name || !image) {
+      try {
+        const updatedCategory = await Category.findByIdAndUpdate(
+          categoryID,
+          { name: name, image: image },
+          { new: true }
+        );
+        if (!updatedCategory) {
           return res
-            .status(400)
-            .json({ success: false, message: "Name and image are required." });
+            .status(404)
+            .json({ success: false, message: "Category not found." });
         }
-
-        try {
-          const updatedCategory = await Category.findByIdAndUpdate(
-            categoryID,
-            { name: name, image: image },
-            { new: true }
-          );
-          if (!updatedCategory) {
-            return res
-              .status(404)
-              .json({ success: false, message: "Category not found." });
-          }
-          res.json({
-            success: true,
-            message: "Category updated successfully.",
-            data: null,
-          });
-        } catch (error) {
-          res.status(500).json({ success: false, message: error.message });
-        }
-      });
+        res.json({
+          success: true,
+          message: "Category updated successfully.",
+          data: null,
+        });
+      } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+      }
     } catch (err) {
       console.log(`Error updating category: ${err.message}`);
       return res.status(500).json({ success: false, message: err.message });
