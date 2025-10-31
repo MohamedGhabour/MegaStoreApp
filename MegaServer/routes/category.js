@@ -6,7 +6,7 @@ const Product = require("../model/product");
 const { uploadCategory } = require("../uploadFile");
 const multer = require("multer");
 const asyncHandler = require("express-async-handler");
-const verifyAdmin = require("../middleware/adminAuth");
+
 
 const fs = require("fs");
 const path = require("path");
@@ -60,7 +60,6 @@ router.get(
 // Create a new category with image upload
 router.post(
   "/",
-  verifyAdmin,
   asyncHandler(async (req, res) => {
     try {
       uploadCategory.single("img")(req, res, async function (err) {
@@ -113,7 +112,6 @@ router.post(
 // Update a category
 router.put(
   "/:id",
-  verifyAdmin,
   asyncHandler(async (req, res) => {
     try {
       const categoryID = req.params.id;
@@ -172,7 +170,6 @@ router.put(
 // Delete a category
 router.delete(
   "/:id",
-  verifyAdmin,
   asyncHandler(async (req, res) => {
     try {
       const categoryID = req.params.id;

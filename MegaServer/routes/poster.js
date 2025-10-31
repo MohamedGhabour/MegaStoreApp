@@ -4,7 +4,6 @@ const Poster = require("../model/poster");
 const { uploadPosters } = require("../uploadFile");
 const multer = require("multer");
 const asyncHandler = require("express-async-handler");
-const verifyAdmin = require("../middleware/adminAuth");
 
 // Get all posters
 router.get(
@@ -49,7 +48,6 @@ router.get(
 // Create a new poster
 router.post(
   "/",
-  verifyAdmin,
   asyncHandler(async (req, res) => {
     try {
       uploadPosters.single("img")(req, res, async function (err) {
@@ -101,7 +99,6 @@ router.post(
 // Update a poster
 router.put(
   "/:id",
-  verifyAdmin,
   asyncHandler(async (req, res) => {
     try {
       const categoryID = req.params.id;
@@ -160,7 +157,6 @@ router.put(
 // Delete a poster
 router.delete(
   "/:id",
-  verifyAdmin,
   asyncHandler(async (req, res) => {
     const posterID = req.params.id;
     try {

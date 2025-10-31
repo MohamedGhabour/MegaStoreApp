@@ -33,6 +33,7 @@ class CategoryProvider extends ChangeNotifier {
 
       Map<String, dynamic> formDataMap = {
         'name': categoryNameCtrl.text,
+        'image': 'no_data', //? image path will be added from server side
       };
 
       final FormData form =

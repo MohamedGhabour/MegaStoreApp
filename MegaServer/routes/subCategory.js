@@ -4,7 +4,6 @@ const SubCategory = require("../model/subCategory");
 const Brand = require("../model/brand");
 const Product = require("../model/product");
 const asyncHandler = require("express-async-handler");
-const verifyAdmin = require("../middleware/adminAuth");
 
 // Get all sub-categories
 router.get(
@@ -53,7 +52,6 @@ router.get(
 // Create a new sub-category
 router.post(
   "/",
-  verifyAdmin,
   asyncHandler(async (req, res) => {
     const { name, categoryId } = req.body;
     if (!name || !categoryId) {
@@ -82,7 +80,6 @@ router.post(
 // Update a sub-category
 router.put(
   "/:id",
-  verifyAdmin,
   asyncHandler(async (req, res) => {
     const subCategoryID = req.params.id;
     const { name, categoryId } = req.body;
@@ -122,7 +119,6 @@ router.put(
 // Delete a sub-category
 router.delete(
   "/:id",
-  verifyAdmin,
   asyncHandler(async (req, res) => {
     const subCategoryID = req.params.id;
     try {

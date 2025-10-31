@@ -4,7 +4,6 @@ const Product = require("../model/product");
 const multer = require("multer");
 const { uploadProduct } = require("../uploadFile");
 const asyncHandler = require("express-async-handler");
-const verifyAdmin = require("../middleware/adminAuth");
 
 // Get all products
 router.get(
@@ -59,7 +58,6 @@ router.get(
 // create new product
 router.post(
   "/",
-  verifyAdmin,
   asyncHandler(async (req, res) => {
     try {
       // Execute the Multer middleware to handle multiple file fields
@@ -160,7 +158,6 @@ router.post(
 // Update a product
 router.put(
   "/:id",
-  verifyAdmin,
   asyncHandler(async (req, res) => {
     const productId = req.params.id;
     try {
@@ -248,7 +245,6 @@ router.put(
 // Delete a product
 router.delete(
   "/:id",
-  verifyAdmin,
   asyncHandler(async (req, res) => {
     const productID = req.params.id;
     try {
