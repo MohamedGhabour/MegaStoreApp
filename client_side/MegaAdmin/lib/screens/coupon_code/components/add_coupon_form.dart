@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
@@ -118,7 +119,9 @@ class CouponSubmitForm extends StatelessWidget {
                       firstDate: DateTime(2000),
                       lastDate: DateTime(2100),
                       onDateSelected: (DateTime date) {
-                        print('Selected Date: $date');
+                        if (kDebugMode) {
+                          print('Selected Date: $date');
+                        }
                       },
                     ),
                   ),

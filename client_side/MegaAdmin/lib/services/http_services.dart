@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:get/get.dart';
 import 'package:get/get_connect.dart';
 
@@ -22,10 +23,14 @@ class HttpService {
     try {
       final response =
           await GetConnect().post('$baseUrl/$endpointUrl', itemData);
-      print(response.body);
+      if (kDebugMode) {
+        print(response.body);
+      }
       return response;
     } catch (e) {
-      print('Error: $e');
+      if (kDebugMode) {
+        print('Error: $e');
+      }
       return Response(
           body: json.encode({'message': e.toString()}), statusCode: 500);
     }

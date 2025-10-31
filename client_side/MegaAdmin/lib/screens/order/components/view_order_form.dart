@@ -28,7 +28,7 @@ class OrderSubmitForm extends StatelessWidget {
           borderRadius: BorderRadius.circular(12.0),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.1),
+              color: Colors.black.withAlpha((0.1 * 255).round()),
               spreadRadius: 5,
               blurRadius: 7,
               offset: const Offset(0, 3),
@@ -177,7 +177,7 @@ class OrderSubmitForm extends StatelessWidget {
         border: Border.all(color: Colors.blueAccent),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.2),
+            color: Colors.grey.withAlpha((0.2 * 255).round()),
             spreadRadius: 1,
             blurRadius: 3,
             offset: const Offset(0, 1),
@@ -234,7 +234,7 @@ class OrderSubmitForm extends StatelessWidget {
         border: Border.all(color: Colors.blueAccent),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.2),
+            color: Colors.grey.withAlpha((0.2 * 255).round()),
             spreadRadius: 1,
             blurRadius: 3,
             offset: const Offset(0, 1),

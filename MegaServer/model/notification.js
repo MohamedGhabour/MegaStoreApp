@@ -5,7 +5,6 @@ const notificationSchema = new mongoose.Schema(
   {
     notificationId: {
       type: String,
-      required: [true, "Notification ID is required"],
       unique: true,
     },
     title: {

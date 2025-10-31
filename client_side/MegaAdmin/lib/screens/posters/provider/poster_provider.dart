@@ -33,7 +33,6 @@ class PosterProvider extends ChangeNotifier {
 
       Map<String, dynamic> formDataMap = {
         'posterName': posterNameCtrl.text,
-        // 'image': 'no_url', //? image path will be added from server side
       };
 
       final FormData form =
@@ -60,7 +59,9 @@ class PosterProvider extends ChangeNotifier {
             'Error: ${response.body?['message'] ?? response.statusText}');
       }
     } catch (e) {
-      print(e);
+      if (kDebugMode) {
+        print(e);
+      }
       SnackBarHelper.showErrorSnackBar('An error occurred: $e');
       rethrow;
     }
@@ -70,7 +71,7 @@ class PosterProvider extends ChangeNotifier {
     try {
       Map<String, dynamic> formDataMap = {
         'posterName': posterNameCtrl.text,
-        'image': posterForUpdate?.imageUrl?.toString() ?? 'no_url',
+        'image': posterForUpdate?.imageUrl ?? '',
       };
 
       final FormData form =
@@ -99,7 +100,9 @@ class PosterProvider extends ChangeNotifier {
             'Error: ${response.body?['message'] ?? response.statusText}');
       }
     } catch (e) {
-      print(e);
+      if (kDebugMode) {
+        print(e);
+      }
       SnackBarHelper.showErrorSnackBar('An error occurred: $e');
       rethrow;
     }
@@ -125,7 +128,9 @@ class PosterProvider extends ChangeNotifier {
             'Error: ${response.body?['message'] ?? response.statusText}');
       }
     } catch (e) {
-      print(e);
+      if (kDebugMode) {
+        print(e);
+      }
       rethrow;
     }
   }

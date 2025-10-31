@@ -1,7 +1,6 @@
 // ignore_for_file: unused_field, unused_local_variable
 
 import 'dart:developer';
-
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,7 +8,6 @@ import 'package:get_storage/get_storage.dart';
 import 'package:mega_shop/utility/snack_bar_helper.dart';
 
 import '../../../core/data/data_provider.dart';
-import '../../../models/api_response.dart';
 import '../../../models/user.dart';
 import '../../../services/http_services.dart';
 import '../../../utility/constants.dart';
@@ -17,7 +15,7 @@ import '../../../utility/functions.dart';
 import '../login_screen.dart';
 
 class UserProvider extends ChangeNotifier {
-  HttpService service = HttpService();
+  final HttpService service = HttpService();
   final DataProvider _dataProvider;
   final box = GetStorage();
 
@@ -27,121 +25,128 @@ class UserProvider extends ChangeNotifier {
 
   UserProvider(this._dataProvider);
 
+  // 🟢 Login
   Future<String?> login() async {
-    String email = emailController.text.trim().toLowerCase();
-    String pass = passwordController.text;
+    final email = emailController.text.trim().toLowerCase();
+    final pass = passwordController.text;
 
-    String? validate = _isEmailPasswordValid(email, pass);
-
-    if (validate != null) {
-      return validate;
-    }
+    final validate = _isEmailPasswordValid(email, pass);
+    if (validate != null) return validate;
 
     try {
-      Map<String, dynamic> user = {'name': email, 'password': pass};
-
+      final user = {'name': email, 'password': pass};
       final response =
-          await service.addItem(endpointUrl: 'users/login', itemData: user);
+      await service.addItem(endpointUrl: 'users/login', itemData: user);
 
       if (response.isOk) {
-        final ApiResponse<User> apiResponse = ApiResponse<User>.fromJson(
-            response.body,
-            (json) => User.fromJson(json as Map<String, dynamic>));
+        final body = response.body;
+        if (body?['success'] == true) {
+          final data = body?['data'];
+          final token = body?['token'];
 
-        if (apiResponse.success == true) {
-          User? user = apiResponse.data;
-          saveLoginInfo(user);
+          if (data != null) {
+            final loggedUser = User.fromJson(data);
+            await saveLoginInfo(loggedUser);
+          }
 
-          log('login success');
+          // لو عندك استخدام للـ token في باقي الريكوستات
+          // _dataProvider.setToken(token);
+
+          SnackBarHelper.showSuccessSnackBar(body?['message'] ?? 'Login successful!');
+          log('✅ Login success');
           return null;
         } else {
-          return 'Failed to login: ${apiResponse.message}';
+          return 'Failed to login: ${body?['message'] ?? 'Unknown error'}';
         }
       } else {
         return 'Error: ${response.body?['message'] ?? response.statusText}';
       }
     } catch (e) {
-      log(e.toString());
+      log('❌ Login error: $e');
       return 'An error occurred: $e';
     }
   }
 
+  // 🟢 Register
   Future<String?> register() async {
-    String email = emailController.text.trim().toLowerCase();
-    String pass = passwordController.text;
-    String pass2 = passwordController2.text;
+    final email = emailController.text.trim().toLowerCase();
+    final pass = passwordController.text;
+    final pass2 = passwordController2.text;
 
-    String? validate = _isEmailPasswordValid(email, pass);
-
-    if (validate != null) {
-      return validate;
-    } else if (pass2.isEmpty) {
-      return 'Confirm password to proceed.';
-    } else if (pass != pass2) {
-      return 'Passwords do not match!';
-    }
+    final validate = _isEmailPasswordValid(email, pass);
+    if (validate != null) return validate;
+    if (pass2.isEmpty) return 'Confirm password to proceed.';
+    if (pass != pass2) return 'Passwords do not match!';
 
     try {
-      Map<String, dynamic> user = {'name': email, 'password': pass};
-
+      final user = {'name': email, 'password': pass};
       final response =
-          await service.addItem(endpointUrl: 'users/register', itemData: user);
+      await service.addItem(endpointUrl: 'users/register', itemData: user);
 
       if (response.isOk) {
-        ApiResponse apiResponse = ApiResponse.fromJson(response.body, null);
+        final body = response.body;
 
-        if (apiResponse.success == true) {
-          SnackBarHelper.showSuccessSnackBar(apiResponse.message);
-          log('register success');
+        if (body?['success'] == true) {
+          final data = body?['data'];
+          final token = body?['token'];
+
+          if (data != null) {
+            final newUser = User.fromJson(data);
+            await saveLoginInfo(newUser);
+          }
+
+          // _dataProvider.setToken(token);
+
+          SnackBarHelper.showSuccessSnackBar(body?['message'] ?? 'Registered successfully!');
+          log('✅ Register success');
           return null;
         } else {
-          return 'Failed to register: ${apiResponse.message}';
+          return 'Failed to register: ${body?['message'] ?? 'Unknown error'}';
         }
       } else {
         return 'Error: ${response.body?['message'] ?? response.statusText}';
       }
     } catch (e) {
-      log(e.toString());
+      log('❌ Register error: $e');
       return 'An error occurred: $e';
     }
   }
 
+  // 🟢 Save user info locally
   Future<void> saveLoginInfo(User? loginUser) async {
     await box.write(USER_INFO_BOX, loginUser?.toJson());
-    Map<String, dynamic>? userJson = box.read(USER_INFO_BOX);
   }
 
+  // 🟢 Get logged user
   User? getLoginUsr() {
-    Map<String, dynamic>? userJson = box.read(USER_INFO_BOX);
-    User? userLogged = User.fromJson(userJson ?? {});
-    return userLogged;
+    final userJson = box.read(USER_INFO_BOX);
+    if (userJson == null) return null;
+    return User.fromJson(Map<String, dynamic>.from(userJson));
   }
 
-  logOutUser() {
+  // 🟢 Logout user
+  void logOutUser() {
     box.remove(USER_INFO_BOX);
-    Get.offAll(const LoginScreen());
+    Get.offAll(() => const LoginScreen());
   }
 
+  // 🟢 Email/password validation
   String? _isEmailPasswordValid(String email, String password) {
-    bool isEmailEmpty = email.trim().toLowerCase().isEmpty;
-    bool isPasswordEmpty = password.isEmpty;
-    bool isValidEmail = EmailValidator.validate(email.trim().toLowerCase());
-    bool isStrongPassword = validatePassword(password);
+    final isEmailEmpty = email.isEmpty;
+    final isPasswordEmpty = password.isEmpty;
+    final isValidEmail = EmailValidator.validate(email);
+    final isStrongPassword = validatePassword(password);
 
-    if (isEmailEmpty || isPasswordEmpty || !isValidEmail || !isStrongPassword) {
-      if (isEmailEmpty && isPasswordEmpty) {
-        return 'Email and password cannot be empty!';
-      } else if (isEmailEmpty) {
-        return 'Email cannot be empty!';
-      } else if (isPasswordEmpty) {
-        return 'Password cannot be empty!';
-      } else if (!isValidEmail) {
-        return 'Email is not valid!';
-      } else if (!isStrongPassword) {
-        return 'Please use strong password!';
-      }
-    } else {
-      return null;
+    if (isEmailEmpty && isPasswordEmpty) {
+      return 'Email and password cannot be empty!';
+    } else if (isEmailEmpty) {
+      return 'Email cannot be empty!';
+    } else if (isPasswordEmpty) {
+      return 'Password cannot be empty!';
+    } else if (!isValidEmail) {
+      return 'Email is not valid!';
+    } else if (!isStrongPassword) {
+      return 'Please use a stronger password!';
     }
 
     return null;

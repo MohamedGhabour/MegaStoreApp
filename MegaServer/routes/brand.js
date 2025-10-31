@@ -3,6 +3,7 @@ const router = express.Router();
 const Brand = require("../model/brand");
 const Product = require("../model/product");
 const asyncHandler = require("express-async-handler");
+const verifyAdmin = require("../middleware/adminAuth");
 
 // Get all brands
 router.get(
@@ -49,6 +50,7 @@ router.get(
 // Create a new brand
 router.post(
   "/",
+  verifyAdmin,
   asyncHandler(async (req, res) => {
     const { name, subcategoryId } = req.body;
     if (!name || !subcategoryId) {
@@ -77,6 +79,7 @@ router.post(
 // Update a brand
 router.put(
   "/:id",
+  verifyAdmin,
   asyncHandler(async (req, res) => {
     const brandID = req.params.id;
     const { name, subcategoryId } = req.body;
@@ -114,6 +117,7 @@ router.put(
 // Delete a brand
 router.delete(
   "/:id",
+  verifyAdmin,
   asyncHandler(async (req, res) => {
     const brandID = req.params.id;
     try {

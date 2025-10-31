@@ -42,7 +42,7 @@ class CartListSection extends StatelessWidget {
                       padding: const EdgeInsets.all(12),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(8),
-                        color: Colors.blueGrey[100]?.withOpacity(0.6),
+                        color: Colors.blueGrey[100]?.withAlpha((0.6 * 255).toInt()),
                       ),
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(4),
@@ -102,7 +102,7 @@ class CartListSection extends StatelessWidget {
                         Text(
                           'Quantity: ${cartItem.quantity}',
                           style: TextStyle(
-                            color: Colors.black.withOpacity(0.5),
+                            color: Colors.black.withAlpha((0.5 * 255).toInt()),
                             fontWeight: FontWeight.w400,
                           ),
                         ),

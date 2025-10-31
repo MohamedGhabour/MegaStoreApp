@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:get/get_connect/http/src/response/response.dart';
 
 import '../../../core/data/data_provider.dart';
@@ -50,7 +51,9 @@ class VariantsTypeProvider extends ChangeNotifier {
             'Error: ${response.body?['message'] ?? response.statusText}');
       }
     } catch (e) {
-      print(e);
+      if (kDebugMode) {
+        print(e);
+      }
       SnackBarHelper.showErrorSnackBar('An error occurred: $e');
       rethrow;
     }
@@ -87,7 +90,9 @@ class VariantsTypeProvider extends ChangeNotifier {
             'Error: ${response.body?['message'] ?? response.statusText}');
       }
     } catch (e) {
-      print(e);
+      if (kDebugMode) {
+        print(e);
+      }
       SnackBarHelper.showErrorSnackBar('An error occurred: $e');
       rethrow;
     }
@@ -114,7 +119,9 @@ class VariantsTypeProvider extends ChangeNotifier {
             'Error: ${response.body?['message'] ?? response.statusText}');
       }
     } catch (e) {
-      print(e);
+      if (kDebugMode) {
+        print(e);
+      }
       rethrow;
     }
   }

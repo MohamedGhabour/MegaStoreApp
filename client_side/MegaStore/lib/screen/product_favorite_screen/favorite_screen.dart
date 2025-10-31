@@ -13,46 +13,43 @@ class FavoriteScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Future.delayed(Duration.zero, () {
+    // استدعاء تحميل العناصر بعد بناء الـ widget بالكامل
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       context.favoriteProvider.loadFavoriteItems();
     });
 
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: const Size(
-          double.infinity,
-          56.0,
-        ),
+        preferredSize: const Size(double.infinity, 56.0),
         child: ClipRRect(
           child: BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 8, sigmaY: 8),
             child: AppBar(
-              leading: const Icon(
-                Icons.arrow_back,
-                color: Colors.black,
-              ),
+              leading: const Icon(Icons.arrow_back, color: Colors.black),
               elevation: 0.0,
               title: const Text(
                 "Favorites",
                 style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                    color: AppColor.darkAccent),
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: AppColor.darkAccent,
+                ),
               ),
-              backgroundColor: Colors.black.withOpacity(0),
+              backgroundColor: Colors.black.withAlpha(0),
             ),
           ),
         ),
       ),
       body: Padding(
-          padding: const EdgeInsets.all(20),
-          child: Consumer<FavoriteProvider>(
-            builder: (context, favoriteProvider, child) {
-              return ProductGridView(
-                items: favoriteProvider.favoriteProduct,
-              );
-            },
-          )),
+        padding: const EdgeInsets.all(20),
+        child: Consumer<FavoriteProvider>(
+          builder: (context, favoriteProvider, child) {
+            return ProductGridView(
+              items: favoriteProvider.favoriteProduct,
+            );
+          },
+        ),
+      ),
     );
   }
 }

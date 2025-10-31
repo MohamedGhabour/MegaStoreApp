@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:mega_admin/models/api_response.dart';
 import 'package:mega_admin/utility/snack_bar_helper.dart';
 import 'package:flutter/cupertino.dart';
@@ -50,7 +51,9 @@ class SubCategoryProvider extends ChangeNotifier {
             'Error: ${response.body?['message'] ?? response.statusText}');
       }
     } catch (e) {
-      print(e);
+      if (kDebugMode) {
+        print(e);
+      }
       SnackBarHelper.showErrorSnackBar('An error occurred: $e');
       rethrow;
     }
@@ -87,7 +90,9 @@ class SubCategoryProvider extends ChangeNotifier {
             'Error: ${response.body?['message'] ?? response.statusText}');
       }
     } catch (e) {
-      print(e);
+      if (kDebugMode) {
+        print(e);
+      }
       SnackBarHelper.showErrorSnackBar('An error occurred: $e');
       rethrow;
     }
@@ -114,7 +119,9 @@ class SubCategoryProvider extends ChangeNotifier {
             'Error: ${response.body?['message'] ?? response.statusText}');
       }
     } catch (e) {
-      print(e);
+      if (kDebugMode) {
+        print(e);
+      }
       rethrow;
     }
   }

@@ -12,15 +12,25 @@ import 'components/cart_list_section.dart';
 import 'components/empty_cart.dart';
 import 'provider/cart_provider.dart';
 
-class CartScreen extends StatelessWidget {
+class CartScreen extends StatefulWidget {
   const CartScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    Future.delayed(Duration.zero, () {
+  State<CartScreen> createState() => _CartScreenState();
+}
+
+class _CartScreenState extends State<CartScreen> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
       context.cartProvider.getCartItems();
     });
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size(
@@ -43,7 +53,7 @@ class CartScreen extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                     color: AppColor.darkAccent),
               ),
-              backgroundColor: Colors.black.withOpacity(0),
+              backgroundColor: Colors.black.withAlpha(0),
             ),
           ),
         ),
@@ -55,12 +65,7 @@ class CartScreen extends StatelessWidget {
             children: [
               cartProvider.myCartItems.isEmpty
                   ? const EmptyCart()
-                  : Consumer<CartProvider>(
-                      builder: (context, cartProvider, child) {
-                        return CartListSection(
-                            cartProducts: cartProvider.myCartItems);
-                      },
-                    ),
+                  : CartListSection(cartProducts: cartProvider.myCartItems),
               //? total price section
               ClipRRect(
                 borderRadius: const BorderRadius.only(
@@ -88,7 +93,6 @@ class CartScreen extends StatelessWidget {
                               child: Text(
                                 formatCurrency(
                                     context, cartProvider.getCartSubTotal()),
-                                // key: ValueKey<double>(cartProvider.getCartSubTotal()),
                                 style: const TextStyle(
                                   fontSize: 22,
                                   fontWeight: FontWeight.w800,
@@ -105,11 +109,11 @@ class CartScreen extends StatelessWidget {
                             padding: const EdgeInsets.only(top: 20),
                             child: ElevatedButton(
                               onPressed:
-                                  context.cartProvider.myCartItems.isEmpty
-                                      ? null
-                                      : () {
-                                          showCustomBottomSheet(context);
-                                        },
+                              cartProvider.myCartItems.isEmpty
+                                  ? null
+                                  : () {
+                                showCustomBottomSheet(context);
+                              },
                               child: const Padding(
                                 padding: EdgeInsets.all(6.0),
                                 child: Text(

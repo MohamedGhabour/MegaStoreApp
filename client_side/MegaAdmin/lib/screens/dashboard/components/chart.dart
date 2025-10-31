@@ -1,3 +1,5 @@
+// ignore_for_file: unused_local_variable
+
 import 'package:mega_admin/utility/extensions.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';

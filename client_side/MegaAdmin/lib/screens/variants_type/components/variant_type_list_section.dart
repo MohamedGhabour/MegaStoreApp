@@ -71,7 +71,7 @@ class VariantsTypeListSection extends StatelessWidget {
 }
 
 DataRow variantTypeDataRow(
-    BuildContext context, VariantType VariantTypeInfo, int index,
+    BuildContext context, VariantType variantTypeInfo, int index,
     {Function? edit, Function? delete}) {
   return DataRow(
     cells: [
@@ -94,13 +94,13 @@ DataRow variantTypeDataRow(
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
-              child: Text(VariantTypeInfo.name ?? ''),
+              child: Text(variantTypeInfo.name ?? ''),
             ),
           ],
         ),
       ),
-      DataCell(Text(VariantTypeInfo.type ?? '')),
-      DataCell(Text(formatTimestamp(context, VariantTypeInfo.createdAt))),
+      DataCell(Text(variantTypeInfo.type ?? '')),
+      DataCell(Text(formatTimestamp(context, variantTypeInfo.createdAt))),
       DataCell(IconButton(
           onPressed: () {
             if (edit != null) edit();

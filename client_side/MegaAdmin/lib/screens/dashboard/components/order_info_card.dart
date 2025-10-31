@@ -20,7 +20,10 @@ class OrderInfoCard extends StatelessWidget {
       margin: const EdgeInsets.only(top: defaultPadding),
       padding: const EdgeInsets.all(defaultPadding),
       decoration: BoxDecoration(
-        border: Border.all(width: 2, color: primaryColor.withOpacity(0.15)),
+        border: Border.all(
+          width: 2,
+          color: primaryColor.withAlpha((0.15 * 255).round()), // 0.15 من 255
+        ),
         borderRadius: const BorderRadius.all(
           Radius.circular(defaultPadding),
         ),

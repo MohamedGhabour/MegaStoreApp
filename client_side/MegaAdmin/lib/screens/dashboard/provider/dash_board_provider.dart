@@ -101,7 +101,9 @@ class DashBoardProvider extends ChangeNotifier {
             'Error: ${response.body?['message'] ?? response.statusText}');
       }
     } catch (e) {
-      print(e);
+      if (kDebugMode) {
+        print(e);
+      }
       SnackBarHelper.showErrorSnackBar('An error occurred: $e');
       rethrow;
     }
@@ -155,7 +157,9 @@ class DashBoardProvider extends ChangeNotifier {
             'Error: ${response.body?['message'] ?? response.statusText}');
       }
     } catch (e) {
-      print(e);
+      if (kDebugMode) {
+        print(e);
+      }
       SnackBarHelper.showErrorSnackBar('An error occurred: $e');
       rethrow;
     }
@@ -180,7 +184,9 @@ class DashBoardProvider extends ChangeNotifier {
             'Error: ${response.body?['message'] ?? response.statusText}');
       }
     } catch (e) {
-      print(e);
+      if (kDebugMode) {
+        print(e);
+      }
       rethrow;
     }
   }

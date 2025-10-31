@@ -16,23 +16,25 @@ void showCustomBottomSheet(BuildContext context) {
   context.cartProvider.retrieveSavedAddress();
 
   submitOrder() async {
-    showLoadingDialog(context);
+    final cp = context.cartProvider;  // استخرج الـ provider قبل await
+    showLoadingDialog(context);        // فتح Loading مرة واحدة
 
-    await context.cartProvider.submitOrder().then((result) {
-      Navigator.pop(context);
+    final result = await cp.submitOrder();
 
-      if (result == null) {
-        Navigator.pop(context);
-        context.cartProvider.clearCouponDiscount();
-        context.cartProvider.clearCartItems();
-        SnackBarHelper.showSuccessSnackBar(
-            'Your order has been placed successfully.');
-      } else {
-        SnackBarHelper.showErrorSnackBar(result);
-      }
-    });
+    if (!context.mounted) return;      // تأكد أن الـ widget موجودة
+
+    Navigator.pop(context);            // اغلاق Loading dialog
+
+    if (result == null) {
+      Navigator.pop(context);          // اغلاق BottomSheet
+      cp.clearCouponDiscount();
+      cp.clearCartItems();
+      SnackBarHelper.showSuccessSnackBar(
+          'Your order has been placed successfully.');
+    } else {
+      SnackBarHelper.showErrorSnackBar(result);
+    }
   }
-
   showModalBottomSheet(
     context: context,
     builder: (context) {
@@ -95,7 +97,7 @@ void showCustomBottomSheet(BuildContext context) {
                           borderRadius: BorderRadius.circular(8),
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.grey.withOpacity(0.2),
+                              color: Colors.grey.withValues(alpha: 0.2),
                               spreadRadius: 2,
                               blurRadius: 4,
                               offset: const Offset(0, 3),
@@ -326,13 +328,14 @@ void showCustomBottomSheet(BuildContext context) {
                             return;
                           }
                           // Check if the form is valid
-                          if (context.cartProvider.buyNowFormKey.currentState!
-                              .validate()) {
-                            context.cartProvider.buyNowFormKey.currentState!
-                                .save();
+                          final cp = context.cartProvider;
+
+                          if (cp.buyNowFormKey.currentState!.validate()) {
+                            cp.buyNowFormKey.currentState!.save();
                             submitOrder();
                             return;
                           }
+
                         });
                   },
                 )

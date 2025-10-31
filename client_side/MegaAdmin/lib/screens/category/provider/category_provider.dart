@@ -33,7 +33,6 @@ class CategoryProvider extends ChangeNotifier {
 
       Map<String, dynamic> formDataMap = {
         'name': categoryNameCtrl.text,
-        'image': 'no_data', //? image path will be added from server side
       };
 
       final FormData form =
@@ -60,7 +59,9 @@ class CategoryProvider extends ChangeNotifier {
             'Error: ${response.body?['message'] ?? response.statusText}');
       }
     } catch (e) {
-      print(e);
+      if (kDebugMode) {
+        print(e);
+      }
       SnackBarHelper.showErrorSnackBar('An error occurred: $e');
       rethrow;
     }
@@ -99,7 +100,9 @@ class CategoryProvider extends ChangeNotifier {
             'Error: ${response.body?['message'] ?? response.statusText}');
       }
     } catch (e) {
-      print(e);
+      if (kDebugMode) {
+        print(e);
+      }
       SnackBarHelper.showErrorSnackBar('An error occurred: $e');
       rethrow;
     }
@@ -125,7 +128,9 @@ class CategoryProvider extends ChangeNotifier {
             'Error: ${response.body?['message'] ?? response.statusText}');
       }
     } catch (e) {
-      print(e);
+      if (kDebugMode) {
+        print(e);
+      }
       rethrow;
     }
   }

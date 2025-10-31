@@ -2,7 +2,6 @@ import 'dart:developer';
 
 import 'package:mega_admin/models/api_response.dart';
 import 'package:mega_admin/utility/snack_bar_helper.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart' hide Category;
 import 'package:get/get.dart';
 
@@ -534,8 +533,9 @@ class DataProvider extends ChangeNotifier {
                     .map((item) => Order.fromJson(item))
                     .toList());
 
-        print(apiResponse.message);
-
+        if (kDebugMode) {
+          debugPrint(apiResponse.message);
+        }
         _allOrders = apiResponse.data ?? [];
         _filteredOrders = List.from(_allOrders);
 
@@ -546,7 +546,7 @@ class DataProvider extends ChangeNotifier {
         }
       }
     } catch (e) {
-      print(e);
+      debugPrint(e.toString());
       if (showSnack) {
         SnackBarHelper.showErrorSnackBar('An error occurred: $e');
       }

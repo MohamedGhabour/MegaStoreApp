@@ -1,12 +1,12 @@
+// ignore_for_file: constant_identifier_names
 // If you want to test the app on your physical device then
 // open command prompt and run ipconfig, then copy the IP address
 // which looks something like this 192.168.0.XX and paste in MAIN_URL
 // for virtual emulators you should use https://localhost:8080 instead
 // TODO: change according to yours
-// ignore_for_file: constant_identifier_names
 
-const SERVER_URL = 'https://megastoreapp-production-2ba8.up.railway.app';
-const ONESIGNAL_APP_ID = 'YOUR_ONE_SIGNAL_APP_ID';
+const SERVER_URL = 'https://megastoreapp-production.up.railway.app';
+const ONESIGNAL_APP_ID = '983cb729-aa67-43b4-9b16-bb700b76b3ae';
 const CURRENCY_SYMBOL = "EGP ";
 
 // preference keys, no need to change

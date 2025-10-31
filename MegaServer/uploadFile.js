@@ -1,18 +1,23 @@
 const multer = require("multer");
 const path = require("path");
 
-const storageCategory = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, "./public/category");
-  },
-  filename: function (req, file, cb) {
-    // Check file type based on its extension
-    const filetypes = /jpeg|jpg|png/;
-    const extname = filetypes.test(
-      path.extname(file.originalname).toLowerCase()
-    );
+const fileFilter = (req, file, cb) => {
+  const filetypes = /jpeg|jpg|png/;
+  const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
 
-    if (extname) {
+  if (extname) {
+    cb(null, true);
+  } else {
+    cb(new Error("Error: only .jpeg, .jpg, .png files are allowed!"), false);
+  }
+};
+
+const createStorage = (destination) =>
+  multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, `./public/${destination}`);
+    },
+    filename: function (req, file, cb) {
       cb(
         null,
         Date.now() +
@@ -20,69 +25,31 @@ const storageCategory = multer.diskStorage({
           Math.floor(Math.random() * 1000) +
           path.extname(file.originalname)
       );
-    } else {
-      cb("Error: only .jpeg, .jpg, .png files are allowed!");
-    }
-  },
-});
+    },
+  });
 
 const uploadCategory = multer({
-  storage: storageCategory,
+  storage: createStorage("category"),
   limits: {
     fileSize: 1024 * 1024 * 5, // limit filesize to 5MB
   },
-});
-
-const storageProduct = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, "./public/products");
-  },
-  filename: function (req, file, cb) {
-    // Check file type based on its extension
-    const filetypes = /jpeg|jpg|png/;
-    const extname = filetypes.test(
-      path.extname(file.originalname).toLowerCase()
-    );
-
-    if (extname) {
-      cb(null, Date.now() + "_" + file.originalname);
-    } else {
-      cb("Error: only .jpeg, .jpg, .png files are allowed!");
-    }
-  },
+  fileFilter,
 });
 
 const uploadProduct = multer({
-  storage: storageProduct,
+  storage: createStorage("products"),
   limits: {
     fileSize: 1024 * 1024 * 5, // limit filesize to 5MB
   },
-});
-
-const storagePoster = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, "./public/posters");
-  },
-  filename: function (req, file, cb) {
-    // Check file type based on its extension
-    const filetypes = /jpeg|jpg|png/;
-    const extname = filetypes.test(
-      path.extname(file.originalname).toLowerCase()
-    );
-
-    if (extname) {
-      cb(null, Date.now() + "_" + file.originalname);
-    } else {
-      cb("Error: only .jpeg, .jpg, .png files are allowed!");
-    }
-  },
+  fileFilter,
 });
 
 const uploadPosters = multer({
-  storage: storagePoster,
+  storage: createStorage("posters"),
   limits: {
     fileSize: 1024 * 1024 * 5, // limit filesize to 5MB
   },
+  fileFilter,
 });
 
 module.exports = {

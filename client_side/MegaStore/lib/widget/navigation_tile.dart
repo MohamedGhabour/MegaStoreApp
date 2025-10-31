@@ -32,7 +32,7 @@ class NavigationTile extends StatelessWidget {
                 child: Icon(
                   icon,
                   size: 24,
-                  color: Colors.white.withOpacity(0.96),
+                  color: Colors.white.withAlpha((0.96 * 255).round()),
                 ),
               ),
               const SizedBox(width: 16),

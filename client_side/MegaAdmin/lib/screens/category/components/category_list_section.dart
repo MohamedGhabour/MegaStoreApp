@@ -61,7 +61,7 @@ class CategoryListSection extends StatelessWidget {
   }
 }
 
-DataRow categoryDataRow(BuildContext context, Category CatInfo,
+DataRow categoryDataRow(BuildContext context, Category catInfo,
     {Function? edit, Function? delete}) {
   return DataRow(
     cells: [
@@ -69,7 +69,7 @@ DataRow categoryDataRow(BuildContext context, Category CatInfo,
         Row(
           children: [
             Image.network(
-              '$MAIN_URL${CatInfo.image}',
+              '$MAIN_URL${catInfo.image}',
               height: 30,
               width: 30,
               errorBuilder: (BuildContext context, Object exception,
@@ -81,12 +81,12 @@ DataRow categoryDataRow(BuildContext context, Category CatInfo,
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
-              child: Text(CatInfo.name ?? ''),
+              child: Text(catInfo.name ?? ''),
             ),
           ],
         ),
       ),
-      DataCell(Text(formatTimestamp(context, CatInfo.createdAt))),
+      DataCell(Text(formatTimestamp(context, catInfo.createdAt))),
       DataCell(IconButton(
           onPressed: () {
             if (edit != null) edit();
