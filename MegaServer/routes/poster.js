@@ -5,6 +5,15 @@ const { uploadPosters } = require("../uploadFile");
 const multer = require("multer");
 const asyncHandler = require("express-async-handler");
 
+const fs = require("fs");
+const path = require("path");
+
+// Ensure the poster upload folder exists
+const posterDir = path.join(__dirname, "../public/posters");
+if (!fs.existsSync(posterDir)) {
+  fs.mkdirSync(posterDir, { recursive: true });
+}
+
 // Get all posters
 router.get(
   "/",
@@ -64,7 +73,7 @@ router.post(
         const { posterName } = req.body;
         let imageUrl = "no_url";
         if (req.file) {
-          imageUrl = `/image/poster/${req.file.filename}`;
+          imageUrl = `/image/posters/${req.file.filename}`;
         }
 
         if (!posterName) {
@@ -118,7 +127,7 @@ router.put(
         let image = req.body.image;
 
         if (req.file) {
-          image = `/image/poster/${req.file.filename}`;
+          image = `/image/posters/${req.file.filename}`;
         }
 
         if (!posterName || !image) {
